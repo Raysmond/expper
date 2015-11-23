@@ -139,3 +139,4 @@ src/main/webapp/bower_components
 /src/main/resources/config/application.yml
 /src/main/resources/config/application-dev.yml
 /src/main/resources/config/application-prod.yml
+scripts
