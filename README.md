@@ -16,12 +16,15 @@ This is the source code [https://www.expper.com](https://www.expper.com) website
 
 ## Installation in development
 1. Install node and bower dependencies
+
     ```
     npm install -g grunt-cli 
     npm install
     bower install 
     ```
+    
 2. Start Postgres and other services
+
     ```
     # in Mac OS X
     brew install redis
@@ -30,13 +33,17 @@ This is the source code [https://www.expper.com](https://www.expper.com) website
     redis-server
     rabbitmq-server
     ```
+    
 3. Create and modify the configuration files according to your settings
+
     ```
     cp src/main/resources/config/application.example.yml src/main/resources/config/application.yml 
     cp src/main/resources/config/application-dev.example.yml src/main/resources/config/application-dev.yml 
     cp src/main/resources/config/application-prod.example.yml src/main/resources/config/application-prod.yml 
     ```
+    
 4. Start application in development mode
+
     ```
     gradle bootRun # or ./gradlew bootRun , if you haven't install gradle yet
     
