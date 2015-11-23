@@ -34,6 +34,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
  */
 @Controller
 public class ExpperController {
+
     @Autowired
     private PostService postService;
 
@@ -48,9 +49,6 @@ public class ExpperController {
 
     @Autowired
     private CountingService countingService;
-
-    @Autowired
-    private TopicsService topicsService;
 
     @Autowired
     private UserService userService;
@@ -70,7 +68,6 @@ public class ExpperController {
         }
 
         long pages = size / PAGE_SIZE + (size % PAGE_SIZE != 0 ? 1 : 0);
-
 
         Set<ZSetOperations.TypedTuple<Long>> idsWithScore = hotPostService.getPageWithScore(page, PAGE_SIZE);
         List<Long> ids = new ArrayList<>();
