@@ -2,14 +2,22 @@ package com.expper.config;
 
 import com.qiniu.util.Auth;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
 /**
  * @author Raysmond<i@raysmond.com>
  */
+@Configuration
 public class QiniuConfig {
-    public static final Auth qiniuAuth = Auth.create(
-        "gknq31BHuKq5GR0rGVvn-3rEl3ununZSszWkjU9F",
-        "BYdPoC8VnNvbev98gV1BjZyWsY19KCkdZaxCxcaZ");
+    @Autowired
+    private JHipsterProperties jHipsterProperties;
 
-    public static final String bucket = "expper";
-    public static final String domain = "https://dn-expper.qbox.me";
+    @Bean
+    public Auth qiniuAuth() {
+        return Auth.create(
+            jHipsterProperties.getQiniu().getAccessKey(),
+            jHipsterProperties.getQiniu().getSecretKey());
+    }
 }

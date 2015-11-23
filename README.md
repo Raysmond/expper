@@ -6,7 +6,7 @@ Expper
 This is the source code [https://www.expper.com](https://www.expper.com) website.
 
 ## Prerequisites
-- JDK 1.8+
+- Java 8+
 - Spring Boot 1.3.0.RELEASE
 - PostgreSQL 9.4+
 - Jhipster 2.24.0

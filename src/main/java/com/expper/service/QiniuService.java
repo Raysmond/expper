@@ -1,10 +1,12 @@
 package com.expper.service;
 
+import com.expper.config.JHipsterProperties;
 import com.expper.config.QiniuConfig;
 import com.expper.domain.User;
 import com.expper.repository.UserRepository;
 import com.qiniu.http.Response;
 import com.qiniu.storage.UploadManager;
+import com.qiniu.util.Auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +27,10 @@ public class QiniuService {
     private UserRepository userRepository;
 
     @Autowired
-    private UserService userService;
+    private JHipsterProperties jHipsterProperties;
+
+    @Autowired
+    private Auth qiniuAuth;
 
     private UploadManager uploadManager = new UploadManager();
 
@@ -34,7 +39,7 @@ public class QiniuService {
     }
 
     public String pictureToken(Long userId) {
-        return QiniuConfig.qiniuAuth.uploadToken(QiniuConfig.bucket, pictureKey(userId));
+        return qiniuAuth.uploadToken(jHipsterProperties.getQiniu().getBucket(), pictureKey(userId));
     }
 
     public Result uploadPicture(String login, MultipartFile picture) throws IOException {

@@ -58,6 +58,11 @@ jhipster:
         key: xxxxxx
         from: noreply@mail.expper.com
         fromName: Expper
+    qiniu:
+        bucket:
+        domain:
+        accessKey:
+        secretKey:
     async:
         corePoolSize: 2
         maxPoolSize: 50

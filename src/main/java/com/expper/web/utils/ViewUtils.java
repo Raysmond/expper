@@ -1,5 +1,6 @@
 package com.expper.web.utils;
 
+import com.expper.config.JHipsterProperties;
 import com.expper.config.QiniuConfig;
 import com.expper.domain.Message;
 import com.expper.domain.User;
@@ -24,6 +25,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 /**
@@ -45,6 +47,16 @@ public class ViewUtils {
 
     @Inject
     UserRepository userRepository;
+
+    @Inject
+    JHipsterProperties jHipsterProperties;
+
+    private static String qiniuDomain;
+
+    @PostConstruct
+    public void init(){
+        qiniuDomain = jHipsterProperties.getQiniu().getDomain();
+    }
 
     private static final PrettyTime TIME = new PrettyTime(Locale.SIMPLIFIED_CHINESE);
 
@@ -68,7 +80,7 @@ public class ViewUtils {
         if (picture == null)
             return null;
 
-        return QiniuConfig.domain + "/" + picture + "-64w";
+        return qiniuDomain + "/" + picture + "-64w";
     }
 
     public User getCurrentUser() {
