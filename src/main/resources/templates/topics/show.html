@@ -1,0 +1,43 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="index">
+<head>
+    <title th:inline="text" th:text="${topic.friendlyName} + ' - Expper'"></title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="block posts-list-block">
+        <div class="panel panel-default topic-page">
+            <div class="panel-heading">
+                <div class="fright orders">
+                    <a th:href="${#httpServletRequest.requestURI}" th:class="${sort}=='hot' ? 'active' : ''">热门</a>
+                    <span class="slash">•</span>
+                    <a th:href="${#httpServletRequest.requestURI} + '?sort=new'" th:class="${sort}=='new' ? 'active' : ''">最新</a>
+                </div>
+                <ul class="topics-list">
+                    <li><a class="btn btn-default btn-sm" href="/topics/开发语言">开发语言</a></li>
+                    <li><a class="btn btn-default btn-sm" href="/topics/探索发现">探索发现</a></li>
+                    <li><a class="btn btn-default btn-sm" href="/topics/apple">Apple</a></li>
+                    <li><a class="btn btn-default btn-sm" href="/topics/云计算">云计算</a></li>
+                    <li><a class="btn btn-default btn-sm" href="/topics/java">Java</a></li>
+                    <li><a class="btn btn-default btn-sm" href="/topics/javascript">JavaScript</a></li>
+                    <li><a class="btn btn-default btn-sm" href="/topics/python">Python</a></li>
+                    <li><a class="btn btn-default btn-sm" href="/topics/ruby">Ruby</a></li>
+                    <li><a class="btn btn-default btn-sm" href="/topics/php">PHP</a></li>
+                    <li><a class="btn btn-default btn-sm" href="/topics/前端开发">前端开发</a></li>
+                    <li><a class="btn btn-default btn-sm" href="/topics/服务器">服务器</a></li>
+                    <li><a class="btn btn-default btn-sm" href="/topics/数据库">数据库</a></li>
+                    <li><a class="btn btn-default btn-sm" href="/topics/学习">学习</a></li>
+                </ul>
+            </div>
+            <div class="panel-body" layout:include="posts/_posts :: posts"></div>
+            <div class="pagination">
+                <a class="btn btn-default btn-sm prev" th:if="${page>1}" th:href="'?page=' + ${page-1}"><i class="fa fa-long-arrow-left"></i> 上一页</a>
+                <span class="pages-info" th:if="${page>1}">第<span th:text="${page}"></span>页</span>
+                <a class="btn btn-default btn-sm next" th:if="${totalPages>page}" th:href="'?page=' + ${page+1}">下一页 <i class="fa fa-long-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

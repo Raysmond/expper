@@ -1,0 +1,31 @@
+<div ng-cloak>
+    <div class="row">
+        <div class="col-md-4">
+            <span class="hipster img-responsive img-rounded"></span>
+        </div>
+        <div class="col-md-8">
+            <h1>欢迎您，Expper!</h1>
+            <p class="lead">Start here, explore the Internet and to be an expert.</p>
+
+            <div ng-switch="isAuthenticated()">
+                <div class="alert alert-success" ng-switch-when="true">
+                    您已登录 "{{account.login}}".
+                </div>
+
+                <div class="alert alert-warning" ng-switch-when="false">
+                    If you want to <a class="alert-link" href="#/login">sign in</a>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").
+                </div>
+
+                <div class="alert alert-warning" ng-switch-when="false">
+                    You don't have an account yet? <a class="alert-link" href="#/register">Register a new account</a>
+                </div>
+            </div>
+
+            <p>
+                This is the alpha test version of Expper. <br/>
+                If you have any questions, feel free to contact me via email i@raysmond.com.
+            </p>
+
+        </div>
+    </div>
+</div>

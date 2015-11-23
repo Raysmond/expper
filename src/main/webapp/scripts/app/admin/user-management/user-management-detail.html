@@ -1,0 +1,107 @@
+<div>
+    <h2><span>User</span> "{{user.login}}"</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <span>Login</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{user.login}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>FirstName</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{user.firstName}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>LastName</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{user.lastName}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Email</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{user.email}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Activated</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{user.activated}}" readonly>
+                </td>
+            </tr>
+            
+            <tr>
+                <td>
+                    <span>CreatedBy</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{user.createdBy}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>CreatedDate</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control"
+                           value="{{user.createdDate | date:'dd/MM/yy HH:mm' }}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>LastModifiedBy</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{user.lastModifiedBy}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>LastCreatedDate</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control"
+                           value="{{user.lastModifiedDate | date:'dd/MM/yy HH:mm'}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Profiles</span>
+                </td>
+                <td>
+                    <ul class="list-unstyled">
+                        <li ng-repeat="authority in user.authorities"><span>{{authority}}</span></li>
+                    </ul>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            ui-sref="user-management"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+</div>

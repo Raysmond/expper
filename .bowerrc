@@ -1,0 +1,4 @@
+{
+    "allow_root": true,
+    "directory": "src/main/webapp/bower_components"
+}

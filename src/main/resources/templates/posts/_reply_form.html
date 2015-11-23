@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+
+<form name="replyForm" novalidate="" ng-submit="save()" show-validation="" th:fragment="reply_form">
+    <div class="col-md-12">
+        <jh-alert-error></jh-alert-error>
+        <div class="form-group">
+            <textarea class="form-control" name="content" id="field_content" placeholder="添加新回复"
+                    ng-model="reply.content"
+                    required="true" ></textarea>
+            <!--<div ng-show="replyForm.content.$invalid">-->
+                <!--<p class="help-block"-->
+                    <!--ng-show="replyForm.content.$error.required">-->
+                    <!--必填-->
+                <!--</p>-->
+            <!--</div>-->
+        </div>
+    </div>
+    <div class="col-md-12">
+        <button type="submit" ng-disabled="replyForm.$invalid" class="btn btn-primary">
+            <i class="fa fa-paper-plane-o"></i>&nbsp;<span>保存</span>
+        </button>
+    </div>
+</form>
+
+</body>
+</html>

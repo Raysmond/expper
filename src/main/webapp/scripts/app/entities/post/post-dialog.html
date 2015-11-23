@@ -1,0 +1,75 @@
+
+<form name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="clear()">&times;</button>
+        <h4 class="modal-title" id="myPostLabel">修改文章</h4>
+    </div>
+    <div class="modal-body">
+        <jh-alert-error></jh-alert-error>
+
+        <div class="form-group">
+            <label for="field_title">标题</label>
+            <input type="text" class="form-control" name="title" id="field_title"
+                    ng-model="post.title"
+                    required>
+            <div ng-show="editForm.title.$invalid">
+                <p class="help-block" ng-show="editForm.title.$error.required">必填</p>
+            </div>
+        </div>
+        <!-- <div class="form-group">
+            <label for="field_url">原文链接</label>
+            <input type="text" class="form-control" name="url" id="field_url" ng-model="post.url" readonly>
+        </div> -->
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+                <label for="field_domain">原文网站</label>
+                <input type="text" class="form-control" name="domain" id="field_domain" ng-model="post.domain" readonly>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+                <label for="field_author">原文作者</label>
+                <input type="text" class="form-control" name="author" id="field_author" ng-model="post.author">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+                <label for="field_status">状态</label>
+                <select class="form-control" name="status" ng-model="post.status" id="field_status" required>
+                    <option value="PRIVATE">私密</option>
+                    <option value="PUBLIC">公开</option>
+                </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="field_domain">标签</label>
+          <input type="text" class="form-control" id="tag-input" />
+        </div>
+
+        <!-- <div class="form-group">
+            <label for="field_domain">标签</label>
+            <input type="text" class="form-control" name="raw_tags" id="field_tags" ng-model="post.raw_tags" placeholder="以英文逗号分割">
+        </div> -->
+
+        <div class="form-group">
+            <label for="field_content">内容</label>
+            <textarea type="text" class="form-control" name="content" id="field_content"
+                    ng-model="post.content"
+                    ng-maxlength="1048576" rows="10"></textarea>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+            <i class="fa fa-ban"></i></span>&nbsp;<span>取消</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || editForm.$submitted" class="btn btn-primary">
+            <i class="fa fa-check-square-o"></i>&nbsp;<span>保存</span>
+        </button>
+    </div>
+</form>

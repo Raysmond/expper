@@ -1,0 +1,25 @@
+{
+  "generator-jhipster": {
+    "baseName": "expper",
+    "packageName": "com.expper",
+    "packageFolder": "com/expper",
+    "authenticationType": "session",
+    "hibernateCache": "ehcache",
+    "clusteredHttpSession": "no",
+    "websocket": "no",
+    "databaseType": "sql",
+    "devDatabaseType": "postgresql",
+    "prodDatabaseType": "postgresql",
+    "searchEngine": "no",
+    "useSass": true,
+    "buildTool": "gradle",
+    "frontendBuilder": "grunt",
+    "javaVersion": "8",
+    "enableTranslation": false,
+    "rememberMeKey": "1d0a5120da900b095218d41ff8d2347e345c307f",
+    "enableSocialSignIn": false,
+    "testFrameworks": [
+      "gatling"
+    ]
+  }
+}

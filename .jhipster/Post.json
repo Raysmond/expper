@@ -1,0 +1,64 @@
+{
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "login"
+        }
+    ],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "title",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "url",
+            "fieldType": "String",
+            "fieldValidateRules": []
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "domain",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 4,
+            "fieldName": "author",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 5,
+            "fieldName": "summary",
+            "fieldType": "String",
+            "fieldValidateRules": []
+        },
+        {
+            "fieldId": 6,
+            "fieldName": "content",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "65535"
+        },
+        {
+            "fieldId": 7,
+            "fieldName": "status",
+            "fieldType": "PostStatus",
+            "fieldValues": "PRIVATE,PUBLIC",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20151016085149",
+    "dto": "mapstruct",
+    "pagination": "pagination"
+}

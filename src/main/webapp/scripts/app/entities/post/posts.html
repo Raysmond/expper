@@ -1,0 +1,104 @@
+<div class="row">
+    <div class="col-sm-3 sidebar">
+      <button class="btn btn-primary btn-md btn-add-post" ui-sref="post.new">
+          <i class="fa fa-flash"></i>  <span>保存文章</span>
+      </button>
+
+        <h2>标签</h2>
+
+        <input type="text" class="form-control" ng-model="searchTag" placeholder="搜索标签">
+        <ul class="tag-list">
+            <li ng-repeat="tag in tags | filter:searchTag">
+                <a ng-click="loadAllByTag(tag.tag)" ng-class="{active: tag.tag.id==filterTag.id}">
+                  <span>{{tag.tag.friendly_name}}</span>
+                  <span class="badge">{{tag.count}}</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="add-tag-block" >
+          <div class="input-group">
+            <input type="text" class="form-control" ng-model="newTag" placeholder="添加标签">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button"><i class="fa fa-plus"></i></button>
+            </span>
+          </div>
+        </div>
+    </div>
+
+    <div class="col-sm-9 main-content">
+        <jh-alert></jh-alert>
+
+        <div class="modal fade" id="deletePostConfirmation">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form name="deleteForm" ng-submit="confirmDelete(post.id)">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                    ng-click="clear()">&times;</button>
+                            <h4 class="modal-title">确定删除吗？</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>是否删除所选文章？</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+                                <i class="fa fa-cancel"></i></span>&nbsp;<span>取消</span>
+                            </button>
+                            <button type="submit" ng-disabled="deleteForm.$invalid" class="btn btn-danger">
+                                <i class="fa fa-trash"></i></span>&nbsp;<span>删除</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="search-posts row">
+            <input search-query class="form-control search-article" ng-model="searchQuery"  placeholder="搜索文章..."/>
+        </div>
+        <div class="posts-list user-posts-list row">
+            <div class="post user-post col-sm-12" ng-repeat="post in posts | orderBy:id">
+                <div class="body">
+                    <div class="fright actions">
+                        <a type="submit" ui-sref="post.detail({id:post.id})">
+                        <i class="fa fa-eye"></i>
+                        </a>
+                        <a type="submit" ui-sref="post.edit({id:post.id})">
+                        <i class="fa fa-edit"></i>
+                        </a>
+                        <a type="submit" ng-click="delete(post.id)" class="btn-remove">
+                        <i class="fa fa-trash-o"></i>
+                        </a>
+                    </div>
+                    <div class="title">
+                        <a class="post-title" ui-sref="post.detail({id: post.id})">{{post.title}}</a>
+                        <a class="domain" rel="nofollow" href="{{post.url}}" target="_blank">
+                            <i class="fa fa-share"></i>
+                            <span>{{post.domain}}</span>
+                        </a>
+                    </div>
+                    <div class="meta">
+                        <span class="tags" ng-show="post.tags.length > 0">
+                        <a ng-repeat="tag in post.tags" class="btn-tag" ng-click="loadAllByTag(tag)">{{tag.friendly_name}}</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <nav>
+            <ul class="pagination" ng-show="links['last']">
+                <li ng-show="links['first'] >= 0" ng-click="loadPage(links['first'])"><a>&lt;&lt;</a></li>
+                <li ng-show="page > 0" ng-click="loadPage(links['prev'] || 0)"><a>&lt;</a></li>
+                <li ng-show="page > 1" ng-click="loadPage(page - 2)"><a>{{page - 1}}</a></li>
+                <li ng-show="page > 0" ng-click="loadPage(page - 1)"><a>{{page}}</a></li>
+                <li class="active"><a>{{page + 1}}</a></li>
+                <li ng-show="page < links['last']" ng-click="loadPage(page + 1)"><a>{{page + 2}}</a></li>
+                <li ng-show="page < links['last'] - 1" ng-click="loadPage(page + 2)"><a>{{page + 3}}</a></li>
+                <li ng-show="links['next']" ng-click="loadPage(links['next'])"><a>&gt;</a></li>
+                <li ng-show="links['last'] > 0" ng-click="loadPage(links['last'])"><a>&gt;&gt;</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>

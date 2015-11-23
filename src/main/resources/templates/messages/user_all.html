@@ -1,0 +1,75 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="index">
+<head>
+    <title>消息中心 - Expper</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="block posts-list-block messages-block">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span>消息中心</span>
+            </div>
+            <div class="panel-body messages">
+                <div class="col-sm-12 message-item"
+                     th:each="message : ${messages}"
+                     th:classappend="${message.status.toString() == 'UNREAD' ? 'message-unread' : ''}">
+                    <div class="message-title" th:if="${message.type.toString() == 'NEW_REPLY'}">
+                        <a th:if="${message.byUser != null}" th:href="'/u/'+${message.byUser.login}"
+                           th:text="${message.byUser.login}"></a>
+                        <span class="message-time"
+                              th:text="${@viewUtils.timeAgo(message.createdAt)}"></span>&nbsp;回复了你分享的文章
+                        <a class="post-title" th:text="${message.post.title}"
+                           th:href="'/posts/'+${message.post.id}"></a>
+                    </div>
+
+                    <div class="message-title"
+                         th:if="${message.type.toString() == 'NEW_REPLY_TO_REPLY'}">
+                        <a th:if="${message.byUser != null}" th:href="'/u/'+${message.byUser.login}"
+                           th:text="${message.byUser.login}"></a>
+                        <span class="message-time"
+                              th:text="${@viewUtils.timeAgo(message.createdAt)}"></span>&nbsp;在
+                        <a class="post-title" th:text="${message.post.title}"
+                           th:href="'/posts/'+${message.post.id}"></a>
+                        中回复了你
+                    </div>
+
+                    <div th:if="${message.type.toString() == 'NEW_VOTE'}" class="message-title">
+                        <a
+                            th:if="${message.byUser != null}"
+                            th:href="'/u/'+${message.byUser.login}"
+                            th:text="${message.byUser.login}">
+                        </a>
+
+                        <span class="message-time"
+                              th:text="${@viewUtils.timeAgo(message.createdAt)}">
+                        </span>&nbsp;
+                        <span th:text="${@viewUtils.getVoteMessageType(message) == 'VOTE_UP' ? '赞了你分享的文章' : ''}"></span>
+                        <span th:text="${@viewUtils.getVoteMessageType(message) == 'VOTE_UP_FROM_DOWN' ? '赞了你分享的文章' : ''}"></span>
+                        <span th:text="${@viewUtils.getVoteMessageType(message) == 'VOTE_DOWN' ? '踩了你分享的文章' : ''}"></span>
+                        <span th:text="${@viewUtils.getVoteMessageType(message) == 'VOTE_DOWN_FROM_UP' ? '踩了你分享的文章' : ''}"></span>
+                        <span th:text="${@viewUtils.getVoteMessageType(message) == 'CANCEL_VOTE_UP' ? '取消了赞分享的文章' : ''}"></span>
+                        <span th:text="${@viewUtils.getVoteMessageType(message) == 'CANCEL_VOTE_DOWN' ? '取消了踩你分享的文章' : ''}"></span>
+                        <a class="post-title"
+                           th:text="${message.title}"
+                           th:href="'/posts/'+${message.post.id}">
+                        </a>
+
+                    </div>
+
+                    <div class="message-body">
+                        <div th:text="${message.content}" th:if="${message.type.toString() != 'NEW_VOTE'}"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="pagination">
+                <a class="btn btn-default btn-sm prev" th:if="${page>1}" th:href="'?page=' + ${page-1}"><i class="fa fa-long-arrow-left"></i> 上一页</a>
+                <span class="pages-info" th:if="${totalPages>1}">第<span th:text="${page} + '/' + ${totalPages}"></span>页</span>
+                <a class="btn btn-default btn-sm next" th:if="${totalPages>page}" th:href="'?page=' + ${page+1}">下一页 <i class="fa fa-long-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorator="index">
+  <head>
+    <title th:inline="text" th:text="${post.title}"></title>
+  </head>
+  <body>
+    <div layout:fragment="content">
+      <div class="block post-block post post-page post-page-front" ng-app="expperApp"
+        th:attr="data-id=${post.id}" th:classappend="'post-'+${post.id}">
+        <div class="panel panel-default post">
+          <div class="panel-heading">
+            <div class="count">
+              <i class="fa fa-comment-o"></i>
+              &nbsp;
+              <span class="badge" th:text="${counting.replies}"></span>
+            </div>
+            <div class="picture">
+              <a th:if="${post.user.picture} == null" th:href="'/u/'+${post.user.login}">
+              <span class="avatar" th:text="${post.user.login.charAt(0)}" th:classappend="'char-'+${post.user.login.charAt(0)}"></span>
+              </a>
+              <a th:if="${post.user.picture} != null" th:href="'/u/'+${post.user.login}">
+              <img th:src="${@viewUtils.pictureUrl(post.user.picture)}"  />
+              </a>
+            </div>
+            <h1 class="title">
+              <a class="post-title" th:href="${post.url}" target="_blank">
+              <span class="post-title" th:text="${post.title}"></span>
+              <span class="domain">
+              <i class="fa fa-share"></i>
+              <span th:text="${post.domain}"></span>
+            </span>
+              </a>
+            </h1>
+            <div class="meta">
+              <span class="votes">
+              <button class="vote-up btn btn-xs btn-default" th:classappend="${vote} != null and ${vote.type.toString()} == 'UP' ? 'active': ''">
+              <i class="fa fa-chevron-up"></i>
+              </button>
+              <span class="vote-value" th:text="${counting.votesUp}-${counting.votesDown}"></span>
+              <button class="vote-down btn btn-xs btn-default" th:classappend="${vote} != null and ${vote.type.toString()} == 'DOWN' ? 'active': ''">
+              <i class="fa fa-chevron-down"></i>
+              </button>
+              </span>
+              <span class="bullet">·</span>
+              <span class="tags">
+              <a class="btn btn-default btn-xs btn-tag" th:each="tag : ${post.tags}" th:text="${tag.friendlyName}" th:href="'/tags/'+${tag.name}"></a>
+              </span>
+              <span class="bullet">·</span>
+              <span>
+              <i class="fa fa-eye"></i>
+              <span th:text="${counting.hits}"></span>
+              </span>
+              <span class="bullet">·</span>
+              <span>
+              <a th:href="'/u/'+${post.user.login}" th:text="${post.user.login}"></a> 分享于
+              <span th:text="${@viewUtils.timeAgo(post.shareAt)}"></span>
+              </span>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="post-body" th:utext="${post.summary}"></div>
+            <div class="post-actions">
+                <a class="btn btn-primary" th:href="${post.url}" target="_blank">阅读全文 <i class="fa fa-share"></i></a>
+                <a class="btn btn-primary" th:href="'/me/#/posts/new?url='+${post.url}" rel="nofollow">收藏文章 <i class="fa fa-cloud-upload"></i></a>
+            </div>
+            <div class="post-replies" ng-controller="ReplyController">
+              <div class="replies-list">
+                <div ng-repeat="reply in replies" class="reply col-md-12 col-xs-12">
+                  <div class="picture">
+                    <a href="/u/{{reply.username}}">
+                    <img ng-if="reply.user_picture" src="{{reply.user_picture}}"/>
+                    <span ng-if="!reply.user_picture" class="avatar char-{{reply.username[0]}}">{{reply.username[0]}}</span>
+                    </a>
+                  </div>
+                  <div class="reply-to">
+                    <a class="btn btn-default btn-xs btn-reply" ng-click="replyTo(reply)">
+                    <i class="fa fa-reply"></i> 回复
+                    </a>
+                  </div>
+                  <div class="user">
+                    <a href="/u/{{reply.username}}">{{reply.username}}</a>
+                    <span>{{reply.created_at_s}}</span>
+                  </div>
+                  <div class="reply-body">
+                    {{reply.content}}
+                  </div>
+                </div>
+              </div>
+              <div ng-show="showLoadMore" class="load-more">
+                <a ng-click="loadMore()" class="btn btn-default">查看更多</a>
+              </div>
+              <div class="reply-form">
+                <div th:replace="posts/_reply_form :: reply_form"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,77 @@
+# ===================================================================
+# Spring Boot configuration for the "prod" profile.
+#
+# This configuration overrides the application.yml file.
+# ===================================================================
+
+# ===================================================================
+# Standard Spring Boot properties.
+# Full reference is available at:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
+
+spring:
+    profiles:
+        active: prod
+#    devtools:
+#        restart:
+#            enabled: false
+#        livereload:
+#            enabled: false
+    datasource:
+        driver-class-name: org.postgresql.ds.PGSimpleDataSource
+        url: jdbc:postgresql://localhost:5432/expper
+        name: expper
+        username: postgres
+        password: postgres
+    jpa:
+        database-platform: com.expper.domain.util.FixedPostgreSQL82Dialect
+        database: POSTGRESQL
+        show_sql: false
+        properties:
+            hibernate.cache.use_second_level_cache: false
+            hibernate.cache.use_query_cache: false
+            hibernate.generate_statistics: false
+            # hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
+    thymeleaf:
+        mode: HTML5
+        cache: true
+        prefix: classpath:/templates_dist/
+    redis:
+        host: 127.0.0.1
+        password:
+        port: 6379
+
+
+liquibase:
+    contexts: prod
+
+server:
+    port: 9000
+    compression:
+        enabled: true
+        mime-types: text/html,text/xml,text/plain,text/css, application/javascript, application/json
+
+# ===================================================================
+# JHipster specific properties
+# ===================================================================
+
+jhipster:
+    http:
+        cache: # Used by the CachingHttpHeadersFilter
+            timeToLiveInDays: 31
+    cache: # Hibernate 2nd level cache, used by CacheConfiguration
+        timeToLiveSeconds: 86400
+        ehcache:
+            maxBytesLocalHeap: 512M
+    metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
+        jmx.enabled: true
+        spark:
+            enabled: false
+            host: localhost
+            port: 9999
+        graphite:
+            enabled: false
+            host: localhost
+            port: 2003
+            prefix: expper

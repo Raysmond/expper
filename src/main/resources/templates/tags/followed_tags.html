@@ -1,0 +1,67 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="index">
+<head>
+    <title>我的关注标签 - Expper</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="block posts-list-block hot-tags-block">
+        <div class="panel panel-default"  ng-controller="UserTagController">
+            <div class="panel-heading">
+                <div class="fright orders">
+                    <a href="/topics">常用</a>
+                    <span class="slash">•</span>
+                    <a href="/tags">热门</a>
+                    <span sec:authorize="isAuthenticated()" class="slash">•</span>
+                    <a sec:authorize="isAuthenticated()" href="/me/tags/following" class="active">我的关注</a>
+                </div>
+                <span>热门标签</span>
+            </div>
+            <div class="panel-body hot-tags">
+                <div class="col-sm-3 tag-item " th:each="tag : ${tags}"
+                     th:classappend="'tag-item-'+${tag.id}"
+                     th:attr="data-id=${tag.id}">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <a class="tag-name" th:href="'/tags/'+${tag.name}"
+                               th:text="${tag.friendlyName}"></a>
+                        </div>
+                        <div class="panel-body">
+                            <div class="tag-description">
+                            <span>
+                                关注:
+                                <span th:text="${tag.followersCount}"
+                                      th:attr="ng-init='followers_count.tag_'+${tag.id} + '=' + ${tag.followersCount}"
+                                      class="followers-count"></span>
+                            </span>
+                                <span class="split">|</span>
+                            <span>
+                                文章:
+                                <span th:text="${tag.postCount}" class="posts-count"></span>
+                            </span>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            <a class="btn btn-xs btn-primary btn-follow"
+                               th:attr="ng-init='follow_tags.tag_'+${tag.id} + '=true', ng-show='!follow_tags.tag_'+${tag.id}, ng-click='followTag('+${tag.id}+')'">
+                                <i class="fa fa-check"></i>&nbsp;关注
+                            </a>
+
+                            <a class="btn btn-xs btn-default btn-follow"
+                               th:attr="ng-init='follow_tags.tag_'+${tag.id} + '=true', ng-show='follow_tags.tag_' +${tag.id}, ng-click='unfollowTag('+${tag.id}+')'">
+                                <i class="fa fa-times"></i>&nbsp;取消关注
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div id="pagination" th:attr="ng-init='initPager('+${page}+','+${totalPages}+')'">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

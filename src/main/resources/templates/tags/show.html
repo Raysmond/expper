@@ -1,0 +1,52 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="index">
+<head>
+    <title th:inline="text" th:text="${tag.friendlyName} + ' - Expper'"></title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="block posts-list-block">
+        <div class="panel panel-default tag-page" th:classappend="'tag-item-'+${tag.id}" ng-controller="UserTagController">
+            <div class="panel-heading">
+                <div class="fright orders">
+                    <a th:href="${#httpServletRequest.requestURI}">热门</a>
+                    <span class="slash">•</span>
+                    <a th:href="${#httpServletRequest.requestURI} + '?sort=new'">最新</a>
+                </div>
+                <span class="page-title">
+                    <i class="fa fa-tag"></i>
+                    <span th:text="${tag.friendlyName}"></span>
+                </span>
+                <span class="tag-counting">
+                  关注:
+                  <span class="followers-count" th:text="${tag.followersCount}"></span>
+                  <span> | </span>
+                  分享:
+                  <span th:text="${tag.postCount}"></span>
+                </span>
+                <div class="follow-links">
+                  <a class="btn btn-xs btn-primary btn-follow"
+                     th:attr="ng-init='isFollowed=' + ${isFollowed}, ng-show='!isFollowed', ng-click='followTag('+${tag.id}+')'">
+                      <i class="fa fa-check"></i>&nbsp;关注
+                  </a>
+
+                  <a class="btn btn-xs btn-default btn-follow"
+                     th:attr="ng-init='isFollowed=' + ${isFollowed}, ng-show='isFollowed', ng-click='unfollowTag('+${tag.id}+')'">
+                      <i class="fa fa-times"></i>&nbsp;取消关注
+                  </a>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+            <div class="panel-body" layout:include="posts/_posts :: posts"></div>
+            <div class="pagination">
+                <a class="btn btn-default btn-sm prev" th:if="${page>1}" th:href="'?page=' + ${page-1}"><i class="fa fa-long-arrow-left"></i> 上一页</a>
+                <span class="pages-info" th:if="${page>1}">第<span th:text="${page}"></span>页</span>
+                <a class="btn btn-default btn-sm next" th:if="${totalPages>page}" th:href="'?page=' + ${page+1}">下一页 <i class="fa fa-long-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

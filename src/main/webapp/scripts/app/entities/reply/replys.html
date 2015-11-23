@@ -1,0 +1,89 @@
+<div>
+    <h2>Replys</h2>
+    <jh-alert></jh-alert>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <button class="btn btn-primary" ui-sref="reply.new">
+                    <span class="glyphicon glyphicon-flash"></span> <span>Create a new Reply</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteReplyConfirmation">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form name="deleteForm" ng-submit="confirmDelete(reply.id)">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                ng-click="clear()">&times;</button>
+                        <h4 class="modal-title">Confirm delete operation</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete this Reply?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+                            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+                        </button>
+                        <button type="submit" ng-disabled="deleteForm.$invalid" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span>Delete</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Content</th>
+                    <th>Status</th>
+                    <th>Created_at</th>
+                    <th>User</th>
+                    <th>Post</th>
+                    <th>Reply to</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody infinite-scroll="loadPage(page + 1)" infinite-scroll-disabled="links['last'] == page">
+                <tr ng-repeat="reply in replys track by reply.id">
+                    <td><a ui-sref="reply.detail({id:reply.id})">{{reply.id}}</a></td>
+                    <td>{{reply.content}}</td>
+                    <td translate="{{'expperApp.ReplyStatus.' + reply.status}}">{{reply.status}}</td>
+                    <td>{{reply.created_at | date:'medium'}}</td>
+                    <td>
+                        {{reply.user_id}}
+                    </td>
+                    <td>
+                        <a ui-sref="post.detail({id:reply.post_id})">{{reply.post_id}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="reply.detail({id:reply.reply_to_id})">{{reply.reply_to_id}}</a>
+                    </td>
+                    <td>
+                        <button type="submit"
+                                ui-sref="reply.detail({id:reply.id})"
+                                class="btn btn-info btn-sm">
+                            <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span> View</span>
+                        </button>
+                        <button type="submit"
+                                ui-sref="reply.edit({id:reply.id})"
+                                class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span> Edit</span>
+                        </button>
+                        <button type="submit"
+                                ng-click="delete(reply.id)"
+                                class="btn btn-danger btn-sm">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span> Delete</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

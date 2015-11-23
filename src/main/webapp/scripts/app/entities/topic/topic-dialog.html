@@ -1,0 +1,63 @@
+
+<form name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="clear()">&times;</button>
+        <h4 class="modal-title" id="myTopicLabel">Create or edit a Topic</h4>
+    </div>
+    <div class="modal-body">
+        <jh-alert-error></jh-alert-error>
+
+        <div class="form-group">
+            <label for="field_friendlyName">FriendlyName</label>
+            <input type="text" class="form-control" name="friendlyName" id="field_friendlyName"
+                    ng-model="topic.friendlyName"
+                    required />
+            <div ng-show="editForm.friendlyName.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.friendlyName.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="field_weight">Weight</label>
+            <input type="number" class="form-control" name="weight" id="field_weight"
+                    ng-model="topic.weight"
+                     />
+        </div>
+        <div class="form-group">
+            <label for="field_description">Description</label>
+            <input type="text" class="form-control" name="description" id="field_description"
+                    ng-model="topic.description"
+                    ng-maxlength="65535" />
+            <div ng-show="editForm.description.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.description.$error.maxlength" translate-value-max="65535">
+                    This field cannot be longer than 65535 characters.
+                </p>
+            </div>
+        </div>
+
+        <!--<div class="form-group">-->
+            <!--<label for="field_tags">tags</label>-->
+            <!--<select class="form-control" id="field_tags" multiple name="tags" ng-model="topic.tags" ng-options="tag as tag.friendly_name for tag in tags track by tag.id"></select>-->
+        <!--</div>-->
+        <div isteven-multi-select
+             input-model="tags"
+             output-model="selectedTags"
+             button-label="friendly_name"
+             item-label="friendly_name"
+             tick-property="ticked"></div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || editForm.$submitted" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

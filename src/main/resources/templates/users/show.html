@@ -1,0 +1,21 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="index">
+<head>
+    <title th:inline="text" th:text="${user.login} + ' - Expper'"></title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="block posts-list-block">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span th:text="${user.login}+'的最新收藏文章'"></span>
+
+                <div class="clearfix"></div>
+            </div>
+            <div class="panel-body" layout:include="posts/_posts :: posts"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

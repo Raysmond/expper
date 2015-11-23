@@ -1,0 +1,38 @@
+<div>
+
+    <h2>登录状态 [<b>{{account.login}}</b>]</h2>
+
+    <div class="alert alert-success" ng-show="success">
+        <strong>删除</strong>
+    </div>
+    <div class="alert alert-danger" ng-show="error">
+        <strong>出错了</strong>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>IP地址</th>
+                    <th>浏览器</th>
+                    <th>日期</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="session in sessions">
+                    <td>{{session.ipAddress}}</td>
+                    <td>{{session.userAgent}}</td>
+                    <td>{{session.formattedTokenDate}}</td>
+                    <td>
+                        <button type="submit"
+                                class="btn btn-primary btn-sm"
+                                ng-click="invalidate(session.series)">
+                                 删除
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

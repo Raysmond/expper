@@ -1,0 +1,46 @@
+
+<form name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="clear()">&times;</button>
+        <h4 class="modal-title" id="myPostLabel">保存文章</h4>
+    </div>
+    <div class="modal-body">
+        <jh-alert-error></jh-alert-error>
+        <div class="form-group">
+            <label for="field_url">链接</label>
+            <input type="text" class="form-control" name="url" id="field_url" ng-model="post.url" required>
+            <div ng-show="editForm.url.$invalid">
+                <p class="help-block" ng-show="editForm.url.$error.required">必填</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+          <label for="field_domain">标签</label>
+          <input ng-init="initTagInput()" type="text" class="form-control" id="tag-input" />
+        </div>
+
+        <div class="form-group">
+            <label for="field_status">状态</label>
+            <select class="form-control" name="status" ng-model="post.status" id="field_status" required>
+                <option value="PRIVATE">私密</option>
+                <option value="PUBLIC">公开</option>
+            </select>
+            <div ng-show="editForm.status.$invalid">
+                <p class="help-block" ng-show="editForm.status.$error.required">必填</p>
+            </div>
+        </div>
+
+
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+            <i class="fa fa-cancel"></i>&nbsp;<span>取消</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || editForm.$submitted" class="btn btn-primary">
+            <i class="fa fa-cloud-upload"></i></span>&nbsp;<span>保存</span>
+        </button>
+    </div>
+</form>

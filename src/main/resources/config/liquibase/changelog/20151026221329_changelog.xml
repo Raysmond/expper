@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="Raysmond (generated)" id="1445868823097-1">
+        <createTable tableName="votes">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="votesPK"/>
+            </column>
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="vote_type" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="post_id" type="BIGINT"/>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Raysmond (generated)" id="1445868823097-2">
+        <addColumn tableName="post">
+            <column name="tag_id" type="int8"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Raysmond (generated)" id="1445868823097-3">
+        <addUniqueConstraint columnNames="user_id, post_id" tableName="votes"/>
+    </changeSet>
+
+    <changeSet author="Raysmond (generated)" id="1445868823097-5">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="votes" constraintName="FK_jpy5cpqhdr870g41de432t0kp" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="Raysmond (generated)" id="1445868823097-6">
+        <addForeignKeyConstraint baseColumnNames="post_id" baseTableName="votes" constraintName="FK_snowcffjecrw34fxm6h5fyah4" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="post"/>
+    </changeSet>
+
+    <changeSet author="Raysmond (generated)" id="1445868823097-8">
+        <dropDefaultValue columnDataType="bigint" columnName="followers_count" tableName="tags"/>
+    </changeSet>
+    <changeSet author="Raysmond (generated)" id="1445868823097-9">
+        <dropDefaultValue columnDataType="int" columnName="hits" tableName="post"/>
+    </changeSet>
+
+    <changeSet author="Raysmond (generated)" id="1445868823097-13">
+        <dropDefaultValue columnDataType="bigint" columnName="post_count" tableName="tags"/>
+    </changeSet>
+    <changeSet author="Raysmond (generated)" id="1445868823097-14">
+        <dropDefaultValue columnDataType="int" columnName="replies" tableName="post"/>
+    </changeSet>
+    <changeSet author="Raysmond (generated)" id="1445868823097-15">
+        <dropDefaultValue columnDataType="int" columnName="votes_down" tableName="post"/>
+    </changeSet>
+    <changeSet author="Raysmond (generated)" id="1445868823097-16">
+        <dropDefaultValue columnDataType="int" columnName="votes_up" tableName="post"/>
+    </changeSet>
+</databaseChangeLog>

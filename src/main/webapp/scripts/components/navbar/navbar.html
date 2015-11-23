@@ -1,0 +1,123 @@
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/"><span>Expper</span> <span class="navbar-version">v{{VERSION}}</span></a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse" ng-switch="isAuthenticated()">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="/">
+                        <i class="fa fa-home"></i>
+                        <span class="hidden-sm">社区</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/topics">
+                        <span class="hidden-sm">标签</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/about">
+                        <span class="hidden-sm">关于</span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li ui-sref-active="active">
+                    <a ui-sref="post" data-toggle="collapse" ng-switch-when="true" data-target=".navbar-collapse.in">
+                        <i class="fa fa-th-list"></i>
+                        <span class="hidden-sm">我的文章</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" ng-switch-when="true" has-authority="ROLE_ADMIN" class="dropdown pointer">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="">
+                        <span>
+                            <i class="fa fa-gears"></i>
+                            <span class="hidden-sm">
+                                内容
+                            </span>
+                            <b class="caret"></b>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li ui-sref-active="active" ><a ui-sref="post" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-gear"></i>
+                        &#xA0;<span >文章</span></a></li>
+                        <li ui-sref-active="active" ><a ui-sref="topic" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-gear"></i>
+                            &#xA0;<span >话题</span></a></li>
+                        <li ui-sref-active="active" ><a ui-sref="tag" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-gear"></i>
+                        &#xA0;<span >标签</span></a></li>
+                        <li ui-sref-active="active" ><a ui-sref="reply" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-gear"></i>
+                            &#xA0;<span >回复</span></a></li>
+                        <!-- JHipster will add entities to the menu here -->
+                    </ul>
+                </li>
+                <li ui-sref-active="active" ng-switch-when="false"><a ui-sref="login" data-target=".navbar-collapse.in"><span>登录</span></a></li>
+                <li ui-sref-active="active" ng-switch-when="false"><a ui-sref="register"  data-target=".navbar-collapse.in"><span>注册</span></a></li>
+
+                <li ng-class="{active: $state.includes('account')}" ng-switch-when="true" has-authority="ROLE_USER" class="dropdown pointer">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="">
+                        <span>
+                            <i class="fa fa-user"></i>
+                            <span class="hidden-sm">
+                                我
+                            </span>
+                            <b class="caret"></b>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li ui-sref-active="active" ><a ui-sref="settings" data-toggle="collapse" data-target=".navbar-collapse.in">
+                          <i class="fa fa-gear"></i>
+                            &#xA0;<span>设置</span></a></li>
+                        <li ui-sref-active="active" ><a ui-sref="password" data-toggle="collapse" data-target=".navbar-collapse.in">
+                          <i class="fa fa-lock"></i>
+                            &#xA0;<span>密码</span></a></li>
+                        <li ui-sref-active="active"><a ui-sref="sessions" data-toggle="collapse" data-target=".navbar-collapse.in">
+                          <i class="fa fa-cloud"></i>
+                            &#xA0;<span>Session</span></a></li>
+                        <li ui-sref-active="active"><a href="" ng-click="logout()" data-toggle="collapse" data-target=".navbar-collapse.in">
+                          <i class="fa fa-sign-out"></i>
+                            &#xA0;<span>登出</span></a></li>
+                    </ul>
+                </li>
+                <li ng-class="{active: $state.includes('admin')}"  ng-switch-when="true" has-authority="ROLE_ADMIN" class="dropdown pointer">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="">
+                        <span>
+                            <i class="fa fa-gear"></i>
+                            <span class="hidden-sm">管理</span>
+                            <b class="caret"></b>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li ui-sref-active="active"><a ui-sref="user-management" data-toggle="collapse" data-target=".navbar-collapse.in">
+                          <i class="fa fa-user"></i>
+                            &#xA0;<span>用户管理</span></a></li>
+                        <li ui-sref-active="active"><a ui-sref="metrics" data-toggle="collapse" data-target=".navbar-collapse.in">
+                          <i class="fa fa-dashboard"></i>
+                            &#xA0;<span>监控</span></a></li>
+                        <li ui-sref-active="active"><a ui-sref="health" data-toggle="collapse" data-target=".navbar-collapse.in">
+                          <i class="fa fa-heart"></i>
+                            &#xA0;<span>服务</span></a></li>
+                        <li ui-sref-active="active"><a ui-sref="configuration" data-toggle="collapse" data-target=".navbar-collapse.in">
+                          <i class="fa fa-list-alt"></i>
+                            &#xA0;<span>配置</span></a></li>
+                        <li ui-sref-active="active"><a ui-sref="audits" data-toggle="collapse" data-target=".navbar-collapse.in">
+                          <i class="fa fa-cloud-upload"></i>
+                            &#xA0;<span>授权</span></a></li>
+                        <li ui-sref-active="active"><a ui-sref="logs" data-toggle="collapse" data-target=".navbar-collapse.in">
+                          <i class="fa fa-tasks"></i>
+                            &#xA0;<span>日志</span></a></li>
+                        <li ng-hide="inProduction" ui-sref-active="active"><a ui-sref="docs" data-toggle="collapse" data-target=".navbar-collapse.in">
+                          <i class="fa fa-book"></i>
+                            &#xA0;<span>API</span></a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

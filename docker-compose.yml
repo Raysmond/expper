@@ -1,0 +1,11 @@
+jhipster-dev-postgresql:
+  container_name: expper-dev-postgresql
+  image: postgres:9.4.5
+  # volumes:
+  # - ~/volumes/jhipster/expper/dev-postgresql/:/var/lib/postgresql/
+  environment:
+  - POSTGRES_USER=expper
+  - POSTGRES_PASSWORD=
+  ports:
+  - "5432:5432"
+

@@ -1,0 +1,77 @@
+# ===================================================================
+# Spring Boot configuration for the "dev" profile.
+#
+# This configuration overrides the application.yml file.
+# ===================================================================
+
+# ===================================================================
+# Standard Spring Boot properties.
+# Full reference is available at:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
+
+spring:
+    profiles:
+        active: dev
+    devtools:
+        restart:
+            enabled: false
+        livereload:
+            enabled: false # we use Grunt + BrowserSync for livereload
+    datasource:
+        driver-class-name: org.postgresql.ds.PGSimpleDataSource
+        url: jdbc:postgresql://127.0.0.1:5432/expper
+        name:
+        username: postgres
+        password: postgres
+    jpa:
+        database-platform: com.expper.domain.util.FixedPostgreSQL82Dialect
+        database: POSTGRESQL
+        show_sql: true
+        properties:
+            hibernate.cache.use_second_level_cache: false
+            hibernate.cache.use_query_cache: false
+            hibernate.generate_statistics: true
+            # hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
+    messages:
+        cache-seconds: 1
+    thymeleaf:
+        mode: HTML5
+        cache: false
+    jade4j:
+        caching: false
+    redis:
+        host: 127.0.0.1
+        port: 6379
+        password:
+    rabbitmq:
+        host: 127.0.0.1
+
+liquibase:
+    contexts: dev
+
+server:
+    port: 8080
+
+# ===================================================================
+# JHipster specific properties
+# ===================================================================
+
+jhipster:
+    cache: # Hibernate 2nd level cache, used by CacheConfiguration
+        timeToLiveSeconds: 3600
+        ehcache:
+            maxBytesLocalHeap: 128M
+    # mail: # specific JHipster mail property, for standard properties see MailProperties
+    # from: expper@localhost
+    metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
+        jmx.enabled: true
+        spark:
+            enabled: false
+            host: localhost
+            port: 9999
+        graphite:
+            enabled: false
+            host: localhost
+            port: 2003
+            prefix: expper

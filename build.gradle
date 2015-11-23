@@ -1,0 +1,203 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        jcenter()
+        maven { url 'http://repo.spring.io/plugins-release' }
+        maven { url 'http://repo.spring.io/milestone' }
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+        classpath group: 'org.sonarqube.gradle', name: 'gradle-sonarqube-plugin', version: '1.0'
+        classpath group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: spring_boot_version
+        classpath group: 'org.springframework.build.gradle', name: 'propdeps-plugin', version: '0.0.7'
+        classpath group: 'com.moowork.gradle', name: 'gradle-node-plugin', version: '0.11'
+        classpath group: 'com.moowork.gradle', name: 'gradle-grunt-plugin', version: '0.11'
+    }
+}
+
+apply plugin: 'java'
+sourceCompatibility=1.8
+targetCompatibility=1.8
+apply plugin: 'maven'
+apply plugin: 'spring-boot'
+apply plugin: 'war'
+apply plugin: 'propdeps'
+apply plugin: 'idea'
+
+defaultTasks 'bootRun'
+
+bootRepackage {
+    mainClass = 'com.expper.Application'
+}
+
+springBoot {
+    mainClass = 'com.expper.Application'
+    executable = true
+}
+
+bootRun {
+    addResources = false
+}
+
+
+test {
+    println 'Starting the Unit and Integration test'
+    include '**/*UnitTest*'
+    include '**/*IntTest*'
+}
+
+task cucumberTest(type: Test) {
+    include '**/CucumberTest*'
+}
+
+test.finalizedBy(cucumberTest)
+
+apply from: 'yeoman.gradle'
+apply from: 'sonar.gradle'
+
+apply from: 'liquibase.gradle'
+
+apply from: 'gatling.gradle'
+apply from: 'mapstruct.gradle'
+
+if (project.hasProperty('prod')) {
+    apply from: 'profile_prod.gradle'
+} else if (project.hasProperty('fast')) {
+    apply from: 'profile_fast.gradle'
+} else {
+    apply from: 'profile_dev.gradle'
+}
+
+group = 'com.expper'
+version = "1.1.1-SNAPSHOT"
+
+description = ''
+
+configurations {
+    providedRuntime
+}
+
+repositories {
+    mavenLocal()
+    jcenter()
+    maven { url 'http://repo.spring.io/milestone' }
+    maven { url 'http://repo.spring.io/snapshot' }
+    maven { url 'https://repository.jboss.org/nexus/content/repositories/releases' }
+    maven { url 'https://oss.sonatype.org/content/repositories/releases' }
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+    maven { url 'http://repo.maven.apache.org/maven2' }
+}
+
+dependencies {
+    compile group: 'io.dropwizard.metrics', name: 'metrics-core'
+    compile group: 'io.dropwizard.metrics', name: 'metrics-annotation', version: dropwizard_metrics_version
+//    compile group: 'io.dropwizard.metrics', name: 'metrics-ehcache', version: dropwizard_metrics_version
+    compile group: 'io.dropwizard.metrics', name: 'metrics-graphite', version: dropwizard_metrics_version
+    compile group: 'io.dropwizard.metrics', name: 'metrics-healthchecks', version: dropwizard_metrics_version
+    compile group: 'io.dropwizard.metrics', name: 'metrics-jvm', version: dropwizard_metrics_version
+    compile group: 'io.dropwizard.metrics', name: 'metrics-servlet', version: dropwizard_metrics_version
+    compile group: 'io.dropwizard.metrics', name: 'metrics-json', version: dropwizard_metrics_version
+    compile (group: 'io.dropwizard.metrics', name: 'metrics-servlets', version: dropwizard_metrics_version) {
+        exclude(module: 'metrics-healthchecks')
+    }
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-json-org', version: jackson_version
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-hppc', version: jackson_version
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: jackson_version
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-hibernate4', version: jackson_version
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jackson_version
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jackson_version
+    compile (group: 'com.ryantenney.metrics', name: 'metrics-spring', version: metrics_spring_version) {
+        exclude(module: 'metrics-core')
+        exclude(module: 'metrics-healthchecks')
+    }
+    compile(group: 'com.zaxxer', name: 'HikariCP', version: HikariCP_version) {
+        exclude(module: 'tools')
+    }
+    compile group: 'commons-lang', name: 'commons-lang', version: commons_lang_version
+    compile group: 'commons-io', name: 'commons-io', version: commons_io_version
+    compile group: 'javax.inject', name: 'javax.inject', version: javax_inject_version
+    compile group: 'javax.transaction', name: 'javax.transaction-api'
+    compile group: 'org.apache.geronimo.javamail', name: 'geronimo-javamail_1.4_mail', version: geronimo_javamail_1_4_mail_version
+    compile group: 'org.hibernate', name: 'hibernate-core', version: hibernate_entitymanager_version
+//    compile (group: 'org.hibernate', name: 'hibernate-ehcache') {
+//        exclude(module: 'ehcache-core')
+//    }
+    compile group: 'org.hibernate', name: 'hibernate-envers'
+    compile group: 'org.hibernate', name: 'hibernate-validator'
+    compile (group: 'org.liquibase', name: 'liquibase-core', version: liquibase_core_version) {
+        exclude(module: 'jetty-servlet')
+    }
+    compile group: 'com.mattbertolini', name: 'liquibase-slf4j', version: liquibase_slf4j_version
+    compile group: 'org.springframework.boot', name: 'spring-boot-actuator'
+    compile group: 'org.springframework.boot', name: 'spring-boot-autoconfigure'
+    compile group: 'org.springframework.boot', name: 'spring-boot-loader-tools'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-logging'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security'
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web') {
+        exclude module: 'spring-boot-starter-tomcat'
+    }
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-cloudfoundry-connector'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-spring-service-connector'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-localconfig-connector'
+    compile(group: 'org.springframework', name: 'spring-context-support') {
+        exclude(module: 'quartz')
+    }
+    compile group: 'org.springframework.security', name: 'spring-security-config', version: spring_security_version
+    compile group: 'org.springframework.security', name: 'spring-security-data', version: spring_security_version
+    compile group: 'org.springframework.security', name: 'spring-security-web', version: spring_security_version
+    compile(group: 'io.springfox', name: 'springfox-swagger2', version: springfox_version){
+        exclude module: 'mapstruct'
+    }
+
+    compile group: 'org.postgresql', name: 'postgresql', version: postgresql_version
+    compile group: 'fr.ippon.spark.metrics', name: 'metrics-spark-reporter', version: metrics_spark_reporter_version
+    compile group: 'org.mapstruct', name: 'mapstruct-jdk8', version: mapstruct_version
+
+
+    // ---------------------------------------------------------------------
+    // begin of libs beyond jhipster
+    compile 'org.springframework.boot:spring-boot-starter-amqp'
+    compile 'org.springframework.boot:spring-boot-starter-redis'
+    compile 'org.springframework.data:spring-data-redis'
+    compile 'redis.clients:jedis:2.7.3'
+    compile 'org.projectlombok:lombok:1.16.6'
+    compile 'org.jsoup:jsoup:1.8.3'
+    compile 'org.ocpsoft.prettytime:prettytime:4.0.0.Final'
+    compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity4:2.1.2.RELEASE'
+    compile 'org.hibernate:hibernate-entitymanager'
+    compile 'net.sourceforge.nekohtml:nekohtml:1.9.22'
+    compile 'com.qiniu:qiniu-java-sdk:7.0.+'
+    compile "com.domingosuarez.boot:spring-boot-starter-jade4j:0.3.1"
+    compile 'de.neuland-bfi:spring-jade4j:0.4.2'
+    // ---------------------------------------------------------------------
+
+    testCompile group: 'com.jayway.awaitility', name: 'awaitility', version: awaility_version
+    testCompile group: 'com.jayway.jsonpath', name: 'json-path'
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+	  testCompile group: 'org.assertj', name: 'assertj-core', version: assertj_core_version
+    testCompile group: 'junit', name: 'junit'
+    testCompile group: 'org.mockito', name: 'mockito-core'
+    testCompile group: 'com.mattbertolini', name: 'liquibase-slf4j', version: liquibase_slf4j_version
+    testCompile group: 'org.hamcrest', name: 'hamcrest-library'
+
+    testCompile group: 'io.gatling.highcharts', name: 'gatling-charts-highcharts', version: gatling_version
+
+    testCompile group: 'com.h2database', name: 'h2'
+    optional group: 'org.springframework.boot', name:'spring-boot-configuration-processor', version: spring_boot_version
+}
+
+compileJava.dependsOn(processResources)
+
+clean {
+    delete "target"
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.9'
+}
+
+task stage(dependsOn: 'bootRepackage') {
+}

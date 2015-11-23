@@ -1,0 +1,49 @@
+
+<div>
+    <h2><span>Tag</span> {{tag.id}}</h2>
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>Field</th>
+                <th>Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <span>Friendly Name</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{tag.friendly_name}}</span>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <span>Name (key)</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{tag.name}}</span>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <span>CreatedAt</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{tag.created_at | date:'medium'}}</span>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+</div>

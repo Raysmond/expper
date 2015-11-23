@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="Raysmond (generated)" id="1445513606774-1">
+        <addColumn tableName="tags">
+            <column name="created_at" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Raysmond (generated)" id="1445513606774-2">
+        <addColumn tableName="tags">
+            <column name="friendlyName" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Raysmond (generated)" id="1445513606774-3">
+        <addColumn tableName="post">
+            <column name="tag_id" type="int8"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Raysmond (generated)" id="1445513606774-4">
+        <addColumn tableName="tags">
+            <column name="user_id" type="int8"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Raysmond (generated)" id="1445513606774-5">
+        <addForeignKeyConstraint baseColumnNames="tag_id" baseTableName="post" constraintName="FK_j1fsrx5xqghxf6orjeicg2kef" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tags"/>
+    </changeSet>
+    <changeSet author="Raysmond (generated)" id="1445513606774-6">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="tags" constraintName="FK_mnhk9958kvdm6x203wxsvp59v" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="Raysmond (generated)" id="1445513606774-7">
+        <dropForeignKeyConstraint baseTableName="posts_tags" constraintName="FK_9u772sjgtc5au17gdopkr4nhr"/>
+    </changeSet>
+    <changeSet author="Raysmond (generated)" id="1445513606774-8">
+        <dropUniqueConstraint constraintName="tags_name_key" tableName="tags"/>
+    </changeSet>
+    <changeSet author="Raysmond (generated)" id="1445513606774-9">
+        <dropColumn columnName="created_at" tableName="posts_tags"/>
+    </changeSet>
+    <changeSet author="Raysmond (generated)" id="1445513606774-10">
+        <dropColumn columnName="tag_name" tableName="posts_tags"/>
+    </changeSet>
+    <changeSet author="Raysmond (generated)" id="1445513606774-11">
+        <dropColumn columnName="user_id" tableName="posts_tags"/>
+    </changeSet>
+    <changeSet author="Raysmond (generated)" id="1445513606774-12">
+        <dropDefaultValue columnDataType="timestamp" columnName="created_at" tableName="post"/>
+    </changeSet>
+    <changeSet author="Raysmond (generated)" id="1445513606774-17">
+        <dropDefaultValue columnDataType="timestamp" columnName="updated_at" tableName="post"/>
+    </changeSet>
+    <changeSet author="Raysmond (generated)" id="1445513606774-18">
+        <!--<dropIndex indexName="tags_idx_name" tableName="tags"/>-->
+        <createIndex indexName="tags_idx_name" tableName="tags">
+            <column name="name"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

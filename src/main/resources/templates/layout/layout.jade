@@ -1,0 +1,24 @@
+!!! 5
+html(lang="en")
+    head
+        meta(charset="utf-8")
+        meta(http-equiv="X-UA-Compatible" content="IE=edge")
+        title Expper
+        meta(name="description", content="")
+        meta(name="viewport", content="width=device-width")
+        meta(name="_csrf", th:content="${_csrf.token}")
+        // build:css(src/main/webapp) /assets/styles/site_vendor.min.css
+        // bower:css
+        link(rel="stylesheet", href="/bower_components/highlightjs/styles/github-gist.css")
+        // endbower
+        // endbuild
+        // build:css(src/main/webapp) /assets/styles/site_main.min.css
+        link(rel="stylesheet", href="/assets/styles/main.css")
+        // endbuild
+        block head
+    body.typo
+        include navbar
+        include top
+        .container.main-container
+            block content
+        include footer

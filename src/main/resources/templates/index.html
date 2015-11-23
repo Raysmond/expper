@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Expper</title>
+    <meta name="description" content="网络文章收藏工具和分享社区"/>
+    <meta name="keywords" content="Expper, 收藏文章, 文章分享社区, 技术社区" />
+    <meta name="viewport" content="width=device-width"/>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(src/main/webapp) /assets/styles/site_vendor.min.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="/bower_components/highlightjs/styles/github-gist.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(src/main/webapp) /assets/styles/site_main.min.css -->
+    <link rel="stylesheet" href="/assets/styles/main.css" />
+    <!-- endbuild -->
+  </head>
+  <body class="gray" ng-app="expperApp">
+    <!--[if lt IE 9]>
+    <p class="browserupgrade">您正在使用过期的浏览器，请更新您的浏览器以获得更棒的体验！推荐使用Chrome或者Firefox浏览器。</p>
+    <![endif]-->
+    <div th:if="${@environment.getActiveProfiles()[0] == 'dev'}">
+      <div class="development"></div>
+    </div>
+    <div th:replace="navbar :: navbar"></div>
+    <div class="container main-container typo">
+      <div class="row">
+        <div class="content-wrapper col-md-9" layout:fragment="content"></div>
+        <div class="sidebar col-md-3" layout:include="sidebar :: sidebar"></div>
+      </div>
+      <div class="footer">
+        <p translate="footer"> &copy; Expper 2015, Lovely Made By Raysmond</p>
+        <p><i class="fa fa-heart-o"></i> Expper v{{VERSION}} - Explore the Internet and Share Something Useful</p>
+      </div>
+    </div>
+
+    <!-- build:js(src/main/webapp) /scripts/site.vendor.js -->
+    <!-- bower:js -->
+    <script src="/bower_components/jquery/dist/jquery.js"></script>
+    <script src="/bower_components/angular/angular.js"></script>
+    <script src="/bower_components/angular-aria/angular-aria.js"></script>
+    <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="/bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+    <script src="/bower_components/angular-resource/angular-resource.js"></script>
+    <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js"></script>
+    <script src="/bower_components/bootstrap-paginator/src/bootstrap-paginator.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:js({.tmp,src/main/webapp}) /scripts/site.main.js -->
+    <script src="/scripts/app/community/app.js"></script>
+    <script src="/scripts/app/app.constants.js"></script>
+    <script src="/scripts/components/alert/alert.service.js"></script>
+    <script src="/scripts/components/alert/alert.directive.js"></script>
+    <script src="/scripts/components/interceptor/notification.interceptor.js"></script>
+    <script src="/scripts/app/entities/entity.js"></script>
+    <script src="/scripts/app/community/vote.js"></script>
+    <script src="/scripts/app/community/reply.controller.js"></script>
+    <script src="/scripts/app/community/reply.service.js"></script>
+    <script src="/scripts/app/community/tag.controller.js"></script>
+    <script src="/scripts/app/community/tag.service.js"></script>
+    <!-- endbuild -->
+
+    <!-- Google Analytics: uncomment and change UA-XXXXX-X to be your site's ID. -->
+    <div th:if="${@environment.getActiveProfiles()[0] == 'prod'}">
+        <script>
+            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+                function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+                e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+                e.src='//www.google-analytics.com/analytics.js';
+                r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+            ga('create','UA-34658010-3');ga('send','pageview');
+        </script>
+    </div>
+  </body>
+</html>

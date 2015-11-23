@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<th:block layout:fragment="sidebar">
+    <div sec:authorize="isAuthenticated()" th:if="${user} == null"
+         class="block panel panel-default user-panel">
+
+        <div class="panel-body" th:with="user=${@viewUtils.getCurrentUser()}">
+
+            <div class="picture">
+                <img th:if="${@viewUtils.getUserPicture(user)} != null"
+                     th:src="${@viewUtils.getUserPicture(user)}"/>
+                <span th:if="${@viewUtils.getUserPicture(user)} == null" class="avatar"
+                      th:text="${user.getLogin().charAt(0)}"
+                      th:classappend="'char-'+${user.getLogin().charAt(0)}"></span>
+            </div>
+
+            <div class="user-info">
+                <h3 class="username" th:text="${user.getLogin()}"></h3>
+
+                <div class="join-date">
+                    加入时间:&nbsp;
+                    <span th:text="${@viewUtils.getFormatDate(user.getCreatedDate())}"></span>
+                </div>
+
+                <div class="user-links">
+                    <a class="btn btn-default" href="/me/#/posts">
+                        <span class="link-text">收藏文章</span>
+                        <span class="posts-count"
+                              th:text="${@viewUtils.getUserPostCount(user)}"></span>
+                    </a>
+                    <a class="btn btn-default" href="/me/tags/following">
+                        <span class="link-text">关注标签</span>
+                        <span class="posts-count"
+                              th:text="${@viewUtils.getUserFollowedTagsCount(user)}"></span>
+                    </a>
+                </div>
+                <div class="share-link">
+                    <a class="btn btn-primary btn-add-post" href="/me/#/posts/new">分享文章</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="block panel panel-default" sec:authorize="!isAuthenticated()">
+        <div class="panel-body">
+            <div class="share-link">
+                <a class="btn btn-primary btn-add-post" href="/me/#/posts/new">分享文章</a>
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${user} != null" class="block panel panel-default user-panel">
+        <div class="panel-body">
+            <div class="picture">
+                <img th:if="${@viewUtils.getUserPicture(user)} != null"
+                     th:src="${@viewUtils.getUserPicture(user)}"/>
+                <span th:if="${@viewUtils.getUserPicture(user)} == null" class="avatar"
+                      th:text="${user.getLogin().charAt(0)}"
+                      th:classappend="'char-'+${user.getLogin().charAt(0)}"></span>
+            </div>
+            <div class="user-info">
+                <h3 class="username" th:text="${user.getLogin()}"></h3>
+
+                <div class="join-date">
+                    加入时间:&nbsp;
+                    <span th:text="${@viewUtils.getFormatDate(user.getCreatedDate())}"></span>
+                </div>
+                <div class="user-links">
+                    <a class="btn btn-default disabled">
+                        <span class="link-text">收藏文章</span>
+                        <span class="posts-count"
+                              th:text="${@viewUtils.getUserPostCount(user)}"></span>
+                    </a>
+                    <a class="btn btn-default disabled">
+                        <span class="link-text">关注标签</span>
+                        <span class="posts-count"
+                              th:text="${@viewUtils.getUserFollowedTagsCount(user)}"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="block panel panel-default chrome-extension-panel">
+        <div class="panel-body">
+            <img src="/assets/images/icon-38.png"/>
+            <a class="btn btn-default"
+               href="https://chrome.google.com/webstore/detail/expper/lemehlnkknfbalogdboldphkjibjkhpp?utm_source=chrome-ntp-icon"
+               target="_blank" rel="nofollow">下载Chrome插件</a>
+        </div>
+    </div>
+
+    <div class="block panel panel-default app-stat-panel">
+        <div class="panel-heading"><i class="fa fa-cog fa-spin"></i> 运行状态</div>
+        <div class="panel-body">
+            <div>
+                <span class="label">注册会员</span>
+                <span class="count" th:text="${@countingService.getUsersCount()}"></span>
+            </div>
+            <div>
+                <span class="label">分享文章</span>
+                <span class="count" th:text="${@countingService.getPublicPostsCount()}"></span>
+            </div>
+            <div>
+                <span class="label">标签</span>
+                <span class="count" th:text="${@countingService.getTagsCount()}"></span>
+            </div>
+
+        </div>
+    </div>
+
+</th:block>
+</body>
+</html>

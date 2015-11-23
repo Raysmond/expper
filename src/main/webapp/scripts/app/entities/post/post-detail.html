@@ -1,0 +1,26 @@
+<div class="post-page">
+    <div class="post">
+        <div class="title"><h1>{{post.title}}</h1></div>
+
+        <div class="meta typo-small">
+            <span><a href="{{post.url}}" target="_blank" rel="nofollow"><i class="fa fa-share"></i> {{post.domain}}</a></span>
+            <!-- <span class="form-control-static" translate="{{'expperApp.PostStatus.' + post.status}}">{{post.status}}</span> -->
+
+            <span class="tags">
+              <i class="fa fa-tags"></i>
+              <span ng-repeat="tag in post.tags" class="btn btn-default btn-xs btn-tag">{{tag.name}}</span>
+            </span>
+
+            <span><i class="fa fa-clock-o"></i> {{post.created_at | date:'yyyy-MM-dd HH:mm'}}</span>
+        </div>
+
+        <div class="content form-control-static" ng-bind-html="post.content | unsafe"></div>
+
+        <button type="submit"
+                onclick="window.history.back()"
+                class="btn btn-info">
+            <i class="fa fa-arrow-left"></i>&nbsp;<span> Back</span>
+        </button>
+    </div>
+
+</div>

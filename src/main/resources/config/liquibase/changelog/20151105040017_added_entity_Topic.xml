@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <property name="now" value="now()" dbms="mysql,h2"/>
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+    <property name="now" value="sysdate" dbms="oracle"/>
+
+    <property name="autoIncrement" value="true" dbms="mysql,h2,postgresql,oracle"/>
+
+    <property name="floatType" value="float4" dbms="postgresql, h2"/>
+    <property name="floatType" value="float" dbms="mysql, oracle"/>
+
+    <!--
+        Added the entity Topic.
+    -->
+    <changeSet id="20151105040017" author="jhipster">
+        <createTable tableName="topic">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="friendly_name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+            <column name="weight" type="integer"/>
+            <column name="description" type="varchar(65535)"/>
+        </createTable>
+        <dropDefaultValue tableName="topic" columnName="created_at" columnDataType="datetime"/>
+
+
+        <createTable tableName="topic_tags">
+            <column name="tags_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="topic_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="topic_id, tags_id" tableName="topic_tags"/>
+
+        <addForeignKeyConstraint baseColumnNames="topic_id"
+                                 baseTableName="topic_tags"
+                                 constraintName="fk_topic_tags_tag_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="topic"/>
+
+        <addForeignKeyConstraint baseColumnNames="tags_id"
+                                 baseTableName="topic_tags"
+                                 constraintName="fk_tag_tags_topic_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tags"/>
+
+    </changeSet>
+</databaseChangeLog>

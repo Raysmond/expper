@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="Raysmond (generated)" id="1447083216013-1">
+        <createTable tableName="message">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="messagePK"/>
+            </column>
+            <column name="content" type="VARCHAR(255)"/>
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(255)"/>
+            <column name="message_type" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="by_user_id" type="BIGINT"/>
+            <column name="post_id" type="BIGINT"/>
+            <column name="to_user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Raysmond (generated)" id="1447083216013-2">
+        <addForeignKeyConstraint baseColumnNames="to_user_id" baseTableName="message" constraintName="FK_7km9u0by538hpun9s9nto7avj" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="Raysmond (generated)" id="1447083216013-3">
+        <addForeignKeyConstraint baseColumnNames="post_id" baseTableName="message" constraintName="FK_9893pnk7vqbgu9gf3v8vlqaqd" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="post"/>
+    </changeSet>
+    <changeSet author="Raysmond (generated)" id="1447083216013-4">
+        <addForeignKeyConstraint baseColumnNames="by_user_id" baseTableName="message" constraintName="FK_9m93c8q9433tc5nqlueomek3o" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+
+</databaseChangeLog>

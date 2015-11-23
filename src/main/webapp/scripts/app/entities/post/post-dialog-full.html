@@ -1,0 +1,93 @@
+
+<form name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="clear()">&times;</button>
+        <h4 class="modal-title" id="myPostLabel">Create or edit a Post</h4>
+    </div>
+    <div class="modal-body">
+        <jh-alert-error></jh-alert-error>
+        <div class="form-group">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   ng-model="post.id" readonly>
+        </div>
+        <div class="form-group">
+            <label for="field_title">Title</label>
+            <input type="text" class="form-control" name="title" id="field_title"
+                   ng-model="post.title"
+                   required>
+            <div ng-show="editForm.title.$invalid">
+                <p class="help-block"
+                   ng-show="editForm.title.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="field_url">Url</label>
+            <input type="text" class="form-control" name="url" id="field_url"
+                   ng-model="post.url"
+                >
+        </div>
+        <div class="form-group">
+            <label for="field_domain">Domain</label>
+            <input type="text" class="form-control" name="domain" id="field_domain"
+                   ng-model="post.domain"
+                >
+        </div>
+        <div class="form-group">
+            <label for="field_author">Author</label>
+            <input type="text" class="form-control" name="author" id="field_author"
+                   ng-model="post.author"
+                >
+        </div>
+        <div class="form-group">
+            <label for="field_summary">Summary</label>
+            <input type="text" class="form-control" name="summary" id="field_summary"
+                   ng-model="post.summary"
+                >
+        </div>
+        <div class="form-group">
+            <label for="field_content">Content</label>
+            <input type="text" class="form-control" name="content" id="field_content"
+                   ng-model="post.content"
+                   ng-maxlength="65535">
+            <div ng-show="editForm.content.$invalid">
+                <p class="help-block"
+                   ng-show="editForm.content.$error.maxlength" translate-value-max="65535">
+                    This field cannot be longer than 65535 characters.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="field_status">Status</label>
+            <select class="form-control" name="status" ng-model="post.status" id="field_status" required>
+                <option value="PRIVATE">PRIVATE</option>
+                <option value="PUBLIC">PUBLIC</option>
+            </select>
+            <div ng-show="editForm.status.$invalid">
+                <p class="help-block"
+                   ng-show="editForm.status.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="field_user">user</label>
+            <select class="form-control" id="field_user" name="user" ng-model="post.userId" ng-options="user.id as user.login for user in users">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+            <i class="fa fa-ban"></i>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || editForm.$submitted" class="btn btn-primary">
+            <i class="fa fa-check-square-o"></i>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

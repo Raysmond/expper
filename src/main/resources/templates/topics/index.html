@@ -1,0 +1,45 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="index">
+<head>
+    <title th:inline="text">常用标签 - Expper</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="block posts-list-block">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="fright orders">
+                    <a href="/topics" class="active">常用</a>
+                    <span class="slash">•</span>
+                    <a href="/tags">热门</a>
+                    <span sec:authorize="isAuthenticated()" class="slash">•</span>
+                    <a sec:authorize="isAuthenticated()" href="/me/tags/following">我的关注</a>
+                </div>
+                <span>常用标签</span>
+            </div>
+            <div class="panel-body topics">
+                <div class="col-sm-12 topic" th:each="topic : ${topics}">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <h2><a th:text="${topic.friendlyName}"
+                                   th:href="'/topics/'+${topic.name}"></a></h2>
+                        </div>
+                        <div class="col-sm-10">
+                            <ul class="topic-tags">
+                                <li th:each="tag : ${topic.tags}">
+                                    <a class="btn btn-default btn-xs btn-tag "
+                                       th:href="'/tags/' + ${tag.name}"
+                                       th:text="${tag.friendlyName}"></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

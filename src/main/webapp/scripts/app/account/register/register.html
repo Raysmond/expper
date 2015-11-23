@@ -1,0 +1,123 @@
+<div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h1>注册</h1>
+            <hr/>
+            <div class="alert alert-success" ng-show="success">
+                <strong>注册成功！</strong> 请查收您的邮箱，激活账号。
+            </div>
+
+            <div class="alert alert-danger" ng-show="error">
+                <strong>注册失败！</strong> 请稍后再试。
+            </div>
+
+            <div class="alert alert-danger" ng-show="errorUserExists">
+                <strong>用户名已存在！</strong> 请换一个。
+            </div>
+
+            <div class="alert alert-danger" ng-show="errorEmailExists">
+                <strong>邮箱已注册！</strong> 请换一个。
+            </div>
+
+            <div class="alert alert-danger" ng-show="doNotMatch">
+                两次输入密码不一致。
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+            <form ng-show="!success" name="form" role="form" novalidate ng-submit="register()" show-validation>
+
+                <div class="form-group">
+                    <label for="login">用户名</label>
+                    <input type="text" class="form-control" id="login" name="login" placeholder="用户名"
+                           ng-model="registerAccount.login" ng-minlength=1 ng-maxlength=50 ng-pattern="/^[a-z0-9]*$/" required>
+                    <div ng-show="form.login.$dirty && form.login.$invalid">
+                        <p class="help-block"
+                               ng-show="form.login.$error.required">
+                            必填
+                        </p>
+                        <p class="help-block"
+                               ng-show="form.login.$error.minlength">
+                            不能为空
+                        </p>
+                        <p class="help-block"
+                               ng-show="form.login.$error.maxlength">
+                            太长了
+                        </p>
+                        <p class="help-block"
+                               ng-show="form.login.$error.pattern">
+                            只能包括小写字母和数字
+                    </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">邮箱</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="邮箱"
+                           ng-model="registerAccount.email" ng-minlength=5 ng-maxlength=100 required>
+                    <div ng-show="form.email.$dirty && form.email.$invalid">
+                        <p class="help-block"
+                               ng-show="form.email.$error.required">
+                            必填
+                        </p>
+                        <p class="help-block"
+                               ng-show="form.email.$error.email">
+                            邮箱格式不合法
+                        </p>
+                        <p class="help-block"
+                               ng-show="form.email.$error.minlength">
+                            太短了
+                        </p>
+                        <p class="help-block"
+                               ng-show="form.email.$error.maxlength">
+                            太长了
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">密码</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="密码"
+                           ng-model="registerAccount.password" ng-minlength=5 ng-maxlength=50 required>
+                    <div ng-show="form.password.$dirty && form.password.$invalid">
+                        <p class="help-block"
+                               ng-show="form.password.$error.required">
+                            不能为空
+                        </p>
+                        <p class="help-block"
+                               ng-show="form.password.$error.minlength">
+                            长度必须大于等于5
+                        </p>
+                        <p class="help-block"
+                               ng-show="form.password.$error.maxlength">
+                            太长了
+                        </p>
+                    </div>
+                    <password-strength-bar password-to-check="registerAccount.password"></password-strength-bar>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">确认密码</label>
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="请重新输入密码"
+                           ng-model="confirmPassword" ng-minlength=5 ng-maxlength=50 required>
+                    <div ng-show="form.confirmPassword.$dirty && form.confirmPassword.$invalid">
+                        <p class="help-block"
+                               ng-show="form.confirmPassword.$error.required">
+                            不能为空
+                        </p>
+                        <p class="help-block"
+                               ng-show="form.confirmPassword.$error.minlength">
+                            长度必须大于等于5
+                        </p>
+                        <p class="help-block"
+                               ng-show="form.confirmPassword.$error.maxlength">
+                            太长了
+                        </p>
+                    </div>
+                </div>
+
+                <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">注册</button>
+            </form>
+            <p></p>
+            <div>
+                已有账号？ <a class="alert-link" href="#/login">立即登录</a>
+            </div>
+        </div>
+    </div>
+</div>

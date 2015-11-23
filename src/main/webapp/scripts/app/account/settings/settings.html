@@ -1,0 +1,105 @@
+<div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+
+            <h2>设置 [<b>{{settingsAccount.login}}</b>]</h2>
+            <hr/>
+
+            <div class="alert alert-success" ng-show="success">
+                <strong>设置保存成功！</strong>
+            </div>
+
+            <div class="alert alert-danger" ng-show="errorEmailExists">
+                <strong>E-mail is already in use!</strong> Please choose another one.
+            </div>
+
+            <div class="alert alert-danger" ng-show="error">
+                <strong>出错了！</strong>
+            </div>
+
+            <form name="form" role="form" novalidate ng-submit="save()" show-validation>
+
+                <div class="form-group">
+                    <label for="firstName">姓名</label>
+                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="姓名"
+                           ng-model="settingsAccount.firstName" ng-minlength=1 ng-maxlength=50 required maxlength="50">
+                    <div ng-show="form.firstName.$dirty && form.firstName.$invalid">
+                        <p class="help-block"
+                               ng-show="form.firstName.$error.required">
+                            不能为空
+                        </p>
+                        <p class="help-block"
+                               ng-show="form.firstName.$error.minlength">
+                            太短了
+                        </p>
+                        <p class="help-block"
+                               ng-show="form.firstName.$error.maxlength">
+                            姓名太长了
+                        </p>
+                    </div>
+                </div>
+                <!-- <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Your last name"
+                           ng-model="settingsAccount.lastName" ng-minlength=1 ng-maxlength=50 required maxlength="50">
+                    <div ng-show="form.lastName.$dirty && form.lastName.$invalid">
+                        <p class="help-block"
+                               ng-show="form.lastName.$error.required">
+                            Your last name is required.
+                        </p>
+                        <p class="help-block"
+                               ng-show="form.lastName.$error.minlength">
+                            Your last name is required to be at least 1 character.
+                        </p>
+                        <p class="help-block"
+                               ng-show="form.lastName.$error.maxlength">
+                            Your last name cannot be longer than 50 characters.
+                        </p>
+                    </div>
+                </div> -->
+                <!-- <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Your e-mail"
+                           ng-model="settingsAccount.email" ng-minlength=5 ng-maxlength=100 required maxlength="100">
+                    <div ng-show="form.email.$dirty && form.email.$invalid">
+                        <p class="help-block"
+                               ng-show="form.email.$error.required">
+                            Your e-mail is required.
+                        </p>
+                        <p class="help-block"
+                               ng-show="form.email.$error.email">
+                            Your e-mail is invalid.
+                        </p>
+                        <p class="help-block"
+                               ng-show="form.email.$error.minlength">
+                            Your e-mail is required to be at least 5 characters.
+                        </p>
+                        <p class="help-block"
+                               ng-show="form.email.$error.maxlength">
+                            Your e-mail cannot be longer than 100 characters.
+                        </p>
+                    </div>
+                </div> -->
+
+                <div class="form-group">
+                    <label>头像</label>
+                    <button class="btn btn-default btn-sm" ngf-select ng-model="picture" name="picture" ngf-pattern="'image/*'"
+                         accept="image/*" ngf-max-size="2MB" ngf-min-height="100"
+                         ngf-resize="{width: 100, height: 100}">上传</button>
+                    <br/>
+                    <img class="picture-preview" ngf-src="picture" ngf-background="picture" ngf-resize="{width: 20, height: 20, quality: 0.9}" ngf-no-object-url="true" />
+
+                </div>
+                <div class="picture">
+                      <img ng-if="settingsAccount.picture" src="{{settingsAccount.picture}}"/>
+                      <span ng-if="!settingsAccount.picture" class="avatar char-{{settingsAccount.login[0]}}">{{settingsAccount.login[0]}}</span>
+                </div>
+
+                <hr/>
+
+                <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">保存</button>
+            </form>
+        </div>
+    </div>
+
+</div>

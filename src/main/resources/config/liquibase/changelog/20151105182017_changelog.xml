@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="Raysmond (generated)" id="1446718832500-1">
+        <addColumn tableName="jhi_user">
+            <column name="picture" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Raysmond (generated)" id="1446718832500-3">
+        <addUniqueConstraint columnNames="name" constraintName="UC_TOPICNAME_COL" tableName="topic"/>
+    </changeSet>
+
+    <changeSet author="Raysmond (generated)" id="1446718832500-10">
+        <dropColumn columnName="tag_id" tableName="post"/>
+    </changeSet>
+
+</databaseChangeLog>
