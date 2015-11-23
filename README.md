@@ -30,12 +30,17 @@ This is the source code [https://www.expper.com](https://www.expper.com) website
     redis-server
     rabbitmq-server
     ```
-3. Change configuration file `application-dev.yml` according to your settings
+3. Create and modify the configuration files according to your settings
+    ```
+    cp src/main/resources/config/application.example.yml src/main/resources/config/application.yml 
+    cp src/main/resources/config/application-dev.example.yml src/main/resources/config/application-dev.yml 
+    cp src/main/resources/config/application-prod.example.yml src/main/resources/config/application-prod.yml 
+    ```
 4. Start application in development mode
     ```
     gradle bootRun # or ./gradlew bootRun , if you haven't install gradle yet
     
-    # open another teriminal and grunt
+    # open another terminal and run grunt
     grunt 
     ```
 
