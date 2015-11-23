@@ -63,3 +63,4 @@ and can be run by starting Spring Boot in one terminal (`./gradlew bootRun`) and
 
 
 ## License
+This project is licensed under GPLv3 license.
