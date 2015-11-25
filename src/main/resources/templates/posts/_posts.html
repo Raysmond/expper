@@ -8,13 +8,7 @@
                 <span class="badge" th:text="${counting.get(post.id).replies}"></span>
             </div>
             <div class="picture">
-
-                <a th:if="${post.user.picture} == null" th:href="'/u/'+${post.user.login}">
-                     <span class="avatar" th:text="${post.user.login.charAt(0)}" th:classappend="'char-'+${post.user.login.charAt(0)}"></span>
-                </a>
-                <a th:if="${post.user.picture} != null" th:href="'/u/'+${post.user.login}">
-                    <img th:src="${@viewUtils.pictureUrl(post.user.picture)}" />
-                </a>
+                <a th:href="'/u/'+${post.user.login}" th:utext="${@viewUtils.userPicture(post.getUser())}"></a>
             </div>
             <div class="body">
                 <div class="title">

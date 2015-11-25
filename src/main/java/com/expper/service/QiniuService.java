@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.UUID;
 
 /**
  * @author Raysmond<i@raysmond.com>
@@ -35,7 +36,7 @@ public class QiniuService {
     private UploadManager uploadManager = new UploadManager();
 
     public String pictureKey(Long userId) {
-        return "pictures/pic_" + userId;
+        return "pictures/pic_" + UUID.randomUUID();
     }
 
     public String authToken(String key) {

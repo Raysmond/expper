@@ -54,7 +54,7 @@ public class ViewUtils {
     private static String qiniuDomain;
 
     @PostConstruct
-    public void init(){
+    public void init() {
         qiniuDomain = jHipsterProperties.getQiniu().getDomain();
     }
 
@@ -74,6 +74,16 @@ public class ViewUtils {
 
     public static String timeAgoOf(ZonedDateTime dateTime) {
         return TIME.format(Date.from(dateTime.toInstant()));
+    }
+
+    public String userPicture(User user) {
+        String url = pictureUrl(userRepository.findByLogin(user.getLogin()).getPicture());
+
+        if (url == null) {
+            return "<span class=\"avatar char-" + user.getLogin().charAt(0) + "\">" + user.getLogin().charAt(0) + "</span>";
+        }
+
+        return "<img src=\"" + url + "\"/>";
     }
 
     public static String pictureUrl(String picture) {

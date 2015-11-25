@@ -34,6 +34,24 @@ public class PostListService {
 
     public static final int MAX_CACHE_POST_PAGES = 20;
 
+
+    // BEGIN of hot post list
+
+    public List<Post> getHotPostsOfPage(int page, int pageSize) throws PageNotFoundException {
+        Set<ZSetOperations.TypedTuple<Long>> idsWithScore = hotPostService.getPageWithScore(page, pageSize);
+        return getHotPostsOfPage(page, idsWithScore);
+    }
+
+    public List<Post> getHotPostsOfPage(int page, int pageSize, Tag tag) throws PageNotFoundException {
+        Set<ZSetOperations.TypedTuple<Long>> idsWithScore = hotPostService.getPageWithScoreOfTag(tag.getId(), page, pageSize);
+        return getHotPostsOfPage(page, idsWithScore);
+    }
+
+    public List<Post> getHotPostsOfPage(int page, int pageSize, Topic topic) throws PageNotFoundException {
+        Set<ZSetOperations.TypedTuple<Long>> idsWithScore = hotPostService.getPageWithScoreOfTopic(topic.getId(), page, pageSize);
+        return getHotPostsOfPage(page, idsWithScore);
+    }
+
     private List<Post> getHotPostsOfPage(int page, Set<ZSetOperations.TypedTuple<Long>> idsWithScore) throws PageNotFoundException {
         if (idsWithScore.isEmpty()) {
             throw new PageNotFoundException();
@@ -55,20 +73,10 @@ public class PostListService {
         return posts;
     }
 
-    public List<Post> getHotPostsOfPage(int page, int pageSize) throws PageNotFoundException {
-        Set<ZSetOperations.TypedTuple<Long>> idsWithScore = hotPostService.getPageWithScore(page, pageSize);
-        return getHotPostsOfPage(page, idsWithScore);
-    }
+    // END ----------------
 
-    public List<Post> getHotPostsOfPage(int page, int pageSize, Tag tag) throws PageNotFoundException {
-        Set<ZSetOperations.TypedTuple<Long>> idsWithScore = hotPostService.getPageWithScoreOfTag(tag.getId(), page, pageSize);
-        return getHotPostsOfPage(page, idsWithScore);
-    }
 
-    public List<Post> getHotPostsOfPage(int page, int pageSize, Topic topic) throws PageNotFoundException {
-        Set<ZSetOperations.TypedTuple<Long>> idsWithScore = hotPostService.getPageWithScoreOfTopic(topic.getId(), page, pageSize);
-        return getHotPostsOfPage(page, idsWithScore);
-    }
+    // BEGIN of new post list
 
     public List<Post> getNewPostsOfPage(int page, int pageSize) throws PageNotFoundException {
         Set<Long> ids = newPostsService.getPage(page, pageSize);
@@ -106,4 +114,6 @@ public class PostListService {
 
         return posts;
     }
+
+    // END -----------------
 }
