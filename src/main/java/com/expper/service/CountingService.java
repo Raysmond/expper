@@ -125,9 +125,15 @@ public class CountingService {
     }
 
     public Map<Long, PostCounting> getPostListCounting(Collection<Long> postIds) {
-        Map<Long, PostCounting> countings = new HashMap<>();
-        postIds.forEach(id -> countings.put(id, getPostCounting(id)));
-        return countings;
+        Map<Long, PostCounting> counting = new HashMap<>();
+        postIds.forEach(id -> counting.put(id, getPostCounting(id)));
+        return counting;
+    }
+
+    public Map<Long, PostCounting> getPostListCounting(List<Post> posts) {
+        Map<Long, PostCounting> counting = new HashMap<>();
+        posts.forEach(post -> counting.put(post.getId(), getPostCounting(post.getId())));
+        return counting;
     }
 
     public PostCounting getPostCounting(Long postId) {

@@ -3,14 +3,12 @@ package com.expper.web;
 import com.codahale.metrics.annotation.Timed;
 import com.expper.domain.Post;
 import com.expper.domain.Tag;
-import com.expper.domain.Vote;
-import com.expper.repository.PostRepository;
 import com.expper.repository.TagRepository;
 import com.expper.security.SecurityUtils;
 import com.expper.service.CountingService;
 import com.expper.service.HotPostService;
 import com.expper.service.NewPostsService;
-import com.expper.service.PostService;
+import com.expper.service.PostListService;
 import com.expper.service.TagService;
 import com.expper.service.UserService;
 import com.expper.service.VoteService;
@@ -20,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,10 +25,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 import java.util.Map;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -41,6 +36,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
  */
 @Controller
 public class TagsController {
+
     @Autowired
     private TagService tagService;
 
@@ -54,9 +50,6 @@ public class TagsController {
     private VoteService voteService;
 
     @Autowired
-    private PostRepository postRepository;
-
-    @Autowired
     private CountingService countingService;
 
     @Autowired
@@ -64,6 +57,9 @@ public class TagsController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PostListService postListService;
 
     private static final int PAGE_SIZE = 20;
 
@@ -134,64 +130,44 @@ public class TagsController {
     @RequestMapping(value = "/tags/{tagName}", method = GET)
     @Timed
     public String tag(Model model, @PathVariable String tagName, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "hot") String sort) {
+        page = page < 1 ? 1 : page - 1;
         if (!sort.equals("new")) {
             sort = "hot";
         }
 
         Tag tag = tagService.findByName(tagName);
-
         if (tag == null) {
             throw new PageNotFoundException("Tag " + tagName + " is not found.");
         }
 
-        page = page < 1 ? 1 : page - 1;
-
         long size = 0;
-        long pages = 0;
-
-        Collection<Long> ids = new ArrayList<>();
         List<Post> posts = new ArrayList<>();
 
         if (sort.equals("hot")) {
             size = hotPostService.sizeOfTag(tag);
-
-            Set<ZSetOperations.TypedTuple<Long>> idsWithScore = hotPostService.getPageWithScoreOfTag(tag.getId(), page, PAGE_SIZE);
-            if (!idsWithScore.isEmpty()) {
-                for (ZSetOperations.TypedTuple<Long> tuple : idsWithScore) {
-                    ids.add(tuple.getValue());
-                }
-
-                posts = postRepository.findByIdIn(ids);
-                hotPostService.sortByScore(posts, idsWithScore);
-            }
+            posts = postListService.getHotPostsOfPage(page, PAGE_SIZE, tag);
         }
 
         if (sort.equals("new")) {
             size = newPostsService.sizeOfTagList(tag.getId());
-            ids = newPostsService.getPageOfTag(tag.getId(), page, PAGE_SIZE);
-
-            if (!ids.isEmpty()) {
-                posts = postRepository.findByIdIn(ids);
-            }
+            posts = postListService.getNewPostsOfPage(page, PAGE_SIZE, tag);
         }
 
-        pages = size / PAGE_SIZE + (size % PAGE_SIZE != 0 ? 1 : 0);
+        long pages = size / PAGE_SIZE + (size % PAGE_SIZE != 0 ? 1 : 0);
 
         model.addAttribute("sort", sort);
         model.addAttribute("tag", tag);
-        model.addAttribute("counting", countingService.getPostListCounting(ids));
+        model.addAttribute("counting", countingService.getPostListCounting(posts));
         model.addAttribute("page", page + 1);
         model.addAttribute("totalPages", pages);
         model.addAttribute("posts", posts);
+        model.addAttribute("votes", voteService.getCurrentUserVoteMapFor(posts));
 
-        Map<Long, Vote> userVotesMap = new HashMap<>();
         boolean isFollowed = false;
         if (SecurityUtils.isAuthenticated()) {
-            Long userId = userService.getCurrentUserId();
-            userVotesMap = voteService.getUserVoteMapFor(posts, userId);
-            isFollowed = tagRepository.getUserFollowedTag(userId, tag.getId()) != null; // Check if the user followed the tag
+            // Check if the user followed the tag
+            isFollowed = tagRepository.getUserFollowedTag(userService.getCurrentUserId(), tag.getId()) != null;
         }
-        model.addAttribute("votes", userVotesMap);
         model.addAttribute("isFollowed", isFollowed);
 
         return "tags/show";

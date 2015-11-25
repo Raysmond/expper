@@ -76,15 +76,10 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("SELECT COUNT(post.id) FROM Post post WHERE post.user.id = ?1")
     Long countUserPosts(Long userId);
 
-    Page<Post> findByStatus(Pageable pageable, PostStatus postStatus);
-
     @Query("select p from Post p where p.status = :status")
     Page<Post> findPublicPosts(Pageable pageable, @Param("status") PostStatus status);
 
     Post findByStatusAndId(PostStatus postStatus, Long id);
-
-    @Query("select p.id from Post p where p.status = com.expper.domain.enumeration.PostStatus.PUBLIC")
-    List<Long> getAllPublicIds();
 
     @Query("select distinct post from Post post left join fetch post.tags left join fetch post.user where post.id in (?1) order by post.shareAt desc")
     List<Post> findByIdIn(Collection<Long> ids);

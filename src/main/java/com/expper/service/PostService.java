@@ -41,13 +41,13 @@ import javax.inject.Inject;
  */
 @Service
 public class PostService {
-    @Inject
+    @Autowired
     private PostRepository postRepository;
 
-    @Inject
+    @Autowired
     private TagService tagService;
 
-    @Inject
+    @Autowired
     private PostMapper postMapper;
 
     @Autowired

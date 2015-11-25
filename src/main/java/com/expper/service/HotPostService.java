@@ -7,10 +7,12 @@ import com.expper.domain.enumeration.PostStatus;
 import com.expper.repository.PostRepository;
 import com.expper.repository.TagRepository;
 import com.expper.service.algorithms.Reddit;
+import com.expper.web.exceptions.PageNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.ZSetOperations;
@@ -49,7 +51,9 @@ public class HotPostService {
     public static final String CACHE_HOT_POSTS = "hot_posts";
     public static final String CACHE_HOT_TAG_POSTS = "hot_posts_tag_";
     public static final String CACHE_HOT_TOPIC_POSTS = "hot_posts_topic_";
-    public static final int MAX_HOT_POSTS_SIZE = 2000; // 20*100, 100 page
+
+    public static final int MAX_HOT_POSTS_SIZE = 2000; // 20*100, 100 pages
+
 
     public double redditScore(Post post) {
         return Reddit.hot(post,
@@ -146,6 +150,7 @@ public class HotPostService {
         }
     }
 
+    // TODO
     @Transactional(readOnly = true)
     public void initHotPosts() {
         PageRequest page = new PageRequest(0, Integer.MAX_VALUE, Sort.Direction.DESC, "id");

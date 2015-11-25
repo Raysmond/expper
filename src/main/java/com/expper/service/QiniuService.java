@@ -38,32 +38,25 @@ public class QiniuService {
         return "pictures/pic_" + userId;
     }
 
-    public String pictureToken(Long userId) {
-        return qiniuAuth.uploadToken(jHipsterProperties.getQiniu().getBucket(), pictureKey(userId));
+    public String authToken(String key) {
+        return qiniuAuth.uploadToken(jHipsterProperties.getQiniu().getBucket(), key);
     }
 
-    public Result uploadPicture(String login, MultipartFile picture) throws IOException {
+    public QiniuResult uploadPicture(String login, MultipartFile picture) throws IOException {
         User user = userRepository.findByLogin(login);
-        Long userId = user.getId();
-
-        String token = pictureToken(userId);
+        String key = pictureKey(user.getId());
+        String token = authToken(key);
 
         File file = convert(picture);
-        Response res = uploadManager.put(file, pictureKey(userId), token, null, null, true);
-        Result result = res.jsonToObject(Result.class);
+        Response res = uploadManager.put(file, key, token, null, null, true);
+        QiniuResult result = res.jsonToObject(QiniuResult.class);
 
         file.delete();
 
-        user.setPicture(pictureKey(userId));
+        user.setPicture(key);
         userRepository.save(user);
 
         return result;
-    }
-
-    public File multipartToFile(MultipartFile multipart) throws IOException {
-        File file = new File(multipart.getOriginalFilename());
-        multipart.transferTo(file);
-        return file;
     }
 
     public File convert(MultipartFile file) throws IOException {
@@ -75,7 +68,7 @@ public class QiniuService {
         return convFile;
     }
 
-    public static class Result {
+    public static class QiniuResult {
         public String hash;
         public String key;
         public String fsize;

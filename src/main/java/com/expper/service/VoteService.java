@@ -9,9 +9,12 @@ import com.expper.domain.enumeration.VoteType;
 import com.expper.repository.PostRepository;
 import com.expper.repository.TagRepository;
 import com.expper.repository.VoteRepository;
+import com.expper.security.SecurityUtils;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,9 +37,6 @@ public class VoteService {
     private VoteRepository voteRepository;
 
     @Autowired
-    private HotPostService hotPostService;
-
-    @Autowired
     private CountingService countingService;
 
     @Autowired
@@ -44,6 +44,9 @@ public class VoteService {
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    private UserService userService;
 
     // cache ?
     public Vote getVote(Post post, User user) {
@@ -64,6 +67,7 @@ public class VoteService {
      */
     @Transactional
     @Timed
+    @CacheEvict(value = "cache.user_vote", key = "'vote_'+#postId.toString() + '_' + #userId.toString()")
     public String voteUp(Post post, User user) {
         Vote vote = getVote(post, user);
 
@@ -98,6 +102,7 @@ public class VoteService {
 
     @Transactional
     @Timed
+    @CacheEvict(value = "cache.user_vote", key = "'vote_'+#postId.toString() + '_' + #userId.toString()")
     public String voteDown(Post post, User user) {
         Vote vote = getVote(post, user);
 
@@ -146,7 +151,7 @@ public class VoteService {
         messageService.newVoteMessage(vote, post, result);
     }
 
-    // TODO
+    @Cacheable(value = "cache.user_vote", key = "'vote_'+#postId.toString() + '_' + #userId.toString()")
     public Vote checkUserVote(Long postId, Long userId) {
         Post post = new Post();
         post.setId(postId);
@@ -161,6 +166,14 @@ public class VoteService {
         Set<Long> ids = new HashSet<>();
         posts.forEach(post -> ids.add(post.getId()));
         return voteRepository.getUserVotes(userId, ids);
+    }
+
+    public Map<Long, Vote> getCurrentUserVoteMapFor(List<Post> posts) {
+        if (SecurityUtils.isAuthenticated()) {
+            return getUserVoteMapFor(posts, userService.getCurrentUserId());
+        } else {
+            return new HashMap<>();
+        }
     }
 
     public Map<Long, Vote> getUserVoteMapFor(List<Post> posts, Long userId) {

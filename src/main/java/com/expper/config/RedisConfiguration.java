@@ -12,6 +12,7 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericToStringSerializer;
+import org.springframework.data.redis.serializer.JacksonJsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
@@ -25,7 +26,9 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 class RedisConfiguration {
 
     @Autowired
-    RedisProperties redisProperties;
+    private RedisProperties redisProperties;
+
+    public static final int DEFAULT_EXPIRE_TIME = 3600 * 24;
 
     @Bean
     JedisConnectionFactory jedisConnectionFactory() {
@@ -60,25 +63,15 @@ class RedisConfiguration {
         redisTemplate.setConnectionFactory(jedisConnectionFactory());
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-        redisTemplate.setHashValueSerializer(new GenericToStringSerializer<Integer>(Integer.class));
+        redisTemplate.setHashValueSerializer(new GenericToStringSerializer<>(Integer.class));
         return redisTemplate;
     }
 
     @Bean
     public CacheManager cacheManager() {
         RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate());
-        cacheManager.setDefaultExpiration(3600 * 24); // TODO move to configuration file
+        cacheManager.setDefaultExpiration(DEFAULT_EXPIRE_TIME);
         return cacheManager;
     }
-
-//    @Bean
-//    public CacheManager simpleCacheManager() {
-//        SimpleCacheManager cacheManager = new SimpleCacheManager();
-//        cacheManager.setCaches(
-//            Arrays.asList("entity.post","entity.user","entity.vote","entity.tag").stream()
-//                .map(ConcurrentMapCache::new)
-//                .collect(Collectors.toList()));
-//        return cacheManager;
-//    }
 
 }
