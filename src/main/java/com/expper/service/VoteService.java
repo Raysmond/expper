@@ -67,7 +67,7 @@ public class VoteService {
      */
     @Transactional
     @Timed
-    @CacheEvict(value = "cache.user_vote", key = "'vote_'+#postId.toString() + '_' + #userId.toString()")
+    @CacheEvict(value = "cache.user_vote", key = "'vote_'+#post.id.toString() + '_' + #user.id.toString()")
     public String voteUp(Post post, User user) {
         Vote vote = getVote(post, user);
 
@@ -102,7 +102,7 @@ public class VoteService {
 
     @Transactional
     @Timed
-    @CacheEvict(value = "cache.user_vote", key = "'vote_'+#postId.toString() + '_' + #userId.toString()")
+    @CacheEvict(value = "cache.user_vote", key = "'vote_'+#post.id.toString() + '_' + #user.id.toString()")
     public String voteDown(Post post, User user) {
         Vote vote = getVote(post, user);
 
