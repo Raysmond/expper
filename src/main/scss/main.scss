@@ -316,7 +316,6 @@ a {
 blockquote {
   font-size: 1.0em;
 }
-.posts-table,
 .posts-list {
   margin-top: 15px;
   th {
@@ -325,38 +324,35 @@ blockquote {
       font-weight: 300;
     }
   }
-  .post-row,
   .post {
     border-bottom: 1px #ddd solid;
-    td {
-      padding: 10px;
-    }
-    td.actions {
-      width: 100px;
-      text-align: center;
-      vertical-align: middle;
-      a {
-        padding: 0 1px;
-        display: none;
-        line-height: inherit;
-        &.btn-remove {
-
-          //color: $red-color;
-        }
-      }
+    position: relative;
+    z-index: 1;
+    &:hover{
+      background: #f9f9f9;
     }
     a {
+      position: relative;
+      z-index: 10;
       color: #888;
       &:hover,
       &:focus {
         color: $green-color;
       }
     }
-    td.title a,
+    a.link-post{
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      margin-left: 100px;
+      z-index: 2;
+    }
     a.post-title {
       font-weight: 400;
       color: $text-color;
       font-size: 1.0em;
+      cursor: alias;
+      z-index: 1000;
       &:hover,
       &:focus {
         color: $green-color;
@@ -451,7 +447,7 @@ blockquote {
       float: left;
     }
     .body {
-      padding-left: 60px;
+      padding-left: 110px;
       padding-right: 60px;
     }
     .picture {
@@ -488,8 +484,9 @@ blockquote {
       margin-left: -5px;
       margin-right: 3px;
     }
-    a.domain {
+    .domain {
       font-size: 0.8em;
+      color: #888;
     }
   }
 
@@ -535,21 +532,40 @@ blockquote {
 
 // votes
 .post .votes {
-  button.btn-default {
-    background: #eee;
-    border-color: #eee;
+  float: left;
+  width: 40px;
+  line-height: 1.0;
+  margin-top: 2px;
+  margin-right: 10px;
+  border-right: 1px #ddd solid;
+  button,span{
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+  }
+  button.btn-default, btn-default:focus {
+    background: none;
+    border: none;
     -webkit-box-shadow: none;
     box-shadow: inset none;
     padding: 0 5px;
-    font-size: 0.8em;
-    color: #888;
+    font-size: 1.0em;
+    line-height: 1.2;
+    color: #A1A6B5;
+    outline: none;
+    outline-offset: none;
+  }
+  span{
+    font-weight: bold;
+    color: #A1A6B5;
   }
   button:hover {
     color: $green-color;
-    border-color: #ddd;
+    // border-color: #ddd;
   }
   button.active {
-    background: #ddd;
+    // background: #ddd;
+    color: $green-color;
   }
 }
 
