@@ -542,12 +542,13 @@ blockquote {
     display: block;
     text-align: center;
     margin: 0 auto;
+    box-shadow: none;
   }
   button.btn-default, btn-default:focus {
     background: none;
     border: none;
     -webkit-box-shadow: none;
-    box-shadow: inset none;
+    box-shadow: none;
     padding: 0 5px;
     font-size: 1.0em;
     line-height: 1.2;

@@ -1,6 +1,7 @@
 package com.expper.service.algorithms;
 
 import com.expper.domain.Post;
+import com.qiniu.common.Zone;
 
 import org.joda.time.DateTime;
 import org.joda.time.Seconds;
@@ -12,7 +13,7 @@ import java.util.List;
  * @author Raysmond<i@raysmond.com>
  */
 public class Reddit {
-    public static final long BASE_TIME = ZonedDateTime.now().minusYears(1).toEpochSecond();
+    public static final long BASE_TIME = ZonedDateTime.parse("2015-01-01T00:00:00.0+08:00[Asia/Shanghai]").toEpochSecond();
 
     public void updateHots(List<PostMeta> posts) {
         posts.forEach(post -> {
