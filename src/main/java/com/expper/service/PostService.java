@@ -8,6 +8,7 @@ import com.expper.domain.User;
 import com.expper.domain.enumeration.PostStatus;
 import com.expper.repository.PostRepository;
 import com.expper.repository.TagRepository;
+import com.expper.repository.search.PostSearchRepository;
 import com.expper.service.util.StringUtil;
 import com.expper.web.rest.dto.PostDTO;
 import com.expper.web.rest.dto.PostTagCountDTO;
@@ -63,9 +64,12 @@ public class PostService {
     private TagRepository tagRepository;
 
     @Autowired
+    private PostSearchRepository postSearchRepository;
+
+    @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    public static final String SERVER_URL = "http://localhost:8000/get?url=%s";
+    public static final String SERVER_URL = "http://www.expper.com:8000/get?url=%s";
 
     public static final String CACHE_POST = "entity.post";
 
@@ -107,6 +111,7 @@ public class PostService {
 
             postRepository.save(post);
             postRepository.flush();
+            postSearchRepository.save(post);
 
             rabbitTemplate.convertAndSend(RabbitmqConfiguration.QUEUE_GET_ARTICLE, post);
         }
@@ -149,6 +154,7 @@ public class PostService {
      */
     public void saveNewPost(Post post) {
         postRepository.save(post);
+        postSearchRepository.save(post);
 
         if (post.getStatus() == PostStatus.PUBLIC) {
             hotPostService.addHotPost(post);
@@ -191,6 +197,8 @@ public class PostService {
         postRepository.flush();
         result.getTags().size();
 
+        postSearchRepository.save(post);
+
         if (oldStatus == PostStatus.PRIVATE && result.getStatus() == PostStatus.PUBLIC) {
             newPostsService.add(result);
             hotPostService.addHotPost(result);
@@ -231,6 +239,8 @@ public class PostService {
             countingService.decPublicPostsCount();
             tags.forEach(tagService::decreasePostCountByOne); // 标签文章统计需要减一
         }
+
+        postSearchRepository.delete(post.getId());
     }
 
     @Timed

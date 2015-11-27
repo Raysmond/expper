@@ -7,6 +7,7 @@ import com.expper.domain.User;
 import com.expper.domain.enumeration.PostStatus;
 import com.expper.repository.PostRepository;
 import com.expper.repository.TagRepository;
+import com.expper.repository.search.PostSearchRepository;
 import com.expper.security.SecurityUtils;
 import com.expper.service.PostService;
 import com.expper.service.UserService;
@@ -19,8 +20,6 @@ import com.expper.web.rest.dto.PostDTO;
 import com.expper.web.rest.mapper.PostMapper;
 
 import org.json.JSONException;
-import org.json.JSONObject;
-import org.jsoup.select.Collector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +32,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import javax.inject.Inject;
 import javax.validation.Valid;
 
 import java.net.URI;
@@ -50,23 +48,26 @@ public class PostResource {
 
     private final Logger log = LoggerFactory.getLogger(PostResource.class);
 
-    @Inject
+    @Autowired
     private PostRepository postRepository;
 
-    @Inject
+    @Autowired
     private PostMapper postMapper;
 
-    @Inject
+    @Autowired
     private PostService postService;
 
-    @Inject
+    @Autowired
     private VoteService voteService;
 
-    @Inject
+    @Autowired
     private UserService userService;
 
-    @Inject
+    @Autowired
     private TagRepository tagRepository;
+
+    @Autowired
+    private PostSearchRepository postSearchRepository;
 
     /**
      * POST  /posts -> Create a new post.
@@ -134,7 +135,8 @@ public class PostResource {
         if (keywords.trim().equals("")) {
             page = postRepository.findUserPosts(userService.getCurrentUserId(), pageable);
         } else {
-            page = postRepository.searchUserPosts(pageable, userService.getCurrentUserId(), keywords.toUpperCase());
+            // page = postRepository.searchUserPosts(pageable, userService.getCurrentUserId(), keywords.toUpperCase());
+            page = postSearchRepository.findByTitleLike(keywords, pageable);
         }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/posts");
         return new ResponseEntity<>(page.getContent().stream()
