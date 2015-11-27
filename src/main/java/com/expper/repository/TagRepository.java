@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -22,11 +23,25 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
     Tag findByName(String name);
 
     @Override
-    @CacheEvict(value = TagService.CACHE_TAG, key = "#p0.name")
+    @Cacheable(value = TagService.CACHE_TAG, key = "#p0.toString()")
+    Tag findOne(Long id);
+
+    @Override
+    @Caching(
+        evict = {
+            @CacheEvict(value = TagService.CACHE_TAG, key = "#p0.name"),
+            @CacheEvict(value = TagService.CACHE_TAG, key = "#p0.id.toString()")
+        }
+    )
     void delete(Tag entity);
 
     @Override
-    @CacheEvict(value = TagService.CACHE_TAG, key = "#p0.name")
+    @Caching(
+        evict = {
+            @CacheEvict(value = TagService.CACHE_TAG, key = "#p0.name"),
+            @CacheEvict(value = TagService.CACHE_TAG, key = "#p0.id.toString()")
+        }
+    )
     <S extends Tag> S save(S entity);
 
     @Query("SELECT post.tags FROM Post post WHERE post.id = ?1")
@@ -42,10 +57,10 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
     // TODO what's the simple way to do this page query?
     @Query(value =
         "SELECT tag.* FROM tags tag " +
-        "JOIN follow_tags ft ON ft.tag_id = tag.id " +
-        "WHERE ft.user_id = ?1 " +
-        "ORDER BY tag.post_count DESC " +
-        "LIMIT ?2 OFFSET ?3",
+            "JOIN follow_tags ft ON ft.tag_id = tag.id " +
+            "WHERE ft.user_id = ?1 " +
+            "ORDER BY tag.post_count DESC " +
+            "LIMIT ?2 OFFSET ?3",
         nativeQuery = true)
     List<Tag> findUserTags(Long userId, int limit, int offset);
 

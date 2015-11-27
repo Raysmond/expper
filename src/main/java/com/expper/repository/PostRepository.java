@@ -29,31 +29,30 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     // Left join fetch query is not working with jpa page query
     // The trick is to declare a countQuery
-    @Query(value =
-            "SELECT distinct post FROM Post post " +
-            "LEFT JOIN FETCH post.tags tags " +
-            "WHERE post.user.id = :userId " +
-            "ORDER BY post.id DESC",
-        countQuery =
-            "SELECT COUNT(post) FROM Post post WHERE post.user.id = :userId")
+    @Query(value = "SELECT distinct post FROM Post post " +
+        "LEFT JOIN FETCH post.tags tags " +
+        "WHERE post.user.id = :userId " +
+        "ORDER BY post.id DESC",
+        countQuery = "SELECT COUNT(post) FROM Post post WHERE post.user.id = :userId")
     Page<Post> findUserPosts(@Param("userId") Long userId, Pageable pageable);
 
-    @Query(value =
-            "SELECT distinct post FROM Post post " +
-            "LEFT JOIN FETCH post.tags tags " +
-            "WHERE post.user.id = :userId AND post.status = :status " +
-            "ORDER BY post.id DESC",
+    @Query(value = "SELECT distinct post FROM Post post " +
+        "LEFT JOIN FETCH post.tags tags " +
+        "WHERE post.user.id = :userId AND post.status = :status " +
+        "ORDER BY post.id DESC",
         countQuery = "SELECT COUNT(post) FROM Post post WHERE post.user.id = :userId AND post.status = :status")
     Page<Post> findUserPostsByStatus(@Param("userId") Long userId, @Param("status") PostStatus status, Pageable pageable);
 
     @Query("SELECT post FROM Post post WHERE post.user.id = :uid AND UPPER(post.title) LIKE %:title% ORDER BY post.id DESC")
     Page<Post> searchUserPosts(Pageable pageable, @Param("uid") Long userId, @Param("title") String title);
 
-    @Query("SELECT post FROM Post post LEFT JOIN post.tags tag " +
-        "WHERE post.user.login = ?#{principal.username} " +
+    @Query(value = "SELECT distinct post FROM Post post " +
+        "LEFT JOIN post.tags tag " +
+        "WHERE post.user.login = :login " +
         "AND tag.id = :tagId " +
-        "ORDER BY post.id DESC")
-    Page<Post> findByUserIsCurrentUserAndTagId(Pageable pageable, @Param("tagId") Long tagId);
+        "ORDER BY post.id DESC",
+        countQuery = "SELECT COUNT(post) FROM Post post JOIN post.tags tag WHERE post.user.login = :login AND tag.id = :tagId")
+    Page<Post> findUserPostsByTag(Pageable pageable, @Param("login") String login, @Param("tagId") Long tagId);
 
     @Query("SELECT post FROM Post post LEFT JOIN FETCH post.tags LEFT JOIN FETCH post.user WHERE post.id = ?1 AND post.user.id = ?2")
     Post findUserPost(Long id, Long userId);
@@ -81,7 +80,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     Post findByStatusAndId(PostStatus postStatus, Long id);
 
-    @Query("select distinct post from Post post left join fetch post.tags left join fetch post.user where post.id in (?1) order by post.shareAt desc")
+    @Query("select distinct post from Post post left join fetch post.tags left join fetch post.user where post.id in (?1) order by post.id desc")
     List<Post> findByIdIn(Collection<Long> ids);
 
     @Modifying

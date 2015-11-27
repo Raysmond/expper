@@ -6,6 +6,7 @@ import com.expper.domain.Tag;
 import com.expper.domain.User;
 import com.expper.domain.enumeration.PostStatus;
 import com.expper.repository.PostRepository;
+import com.expper.repository.TagRepository;
 import com.expper.security.SecurityUtils;
 import com.expper.service.PostService;
 import com.expper.service.UserService;
@@ -19,8 +20,10 @@ import com.expper.web.rest.mapper.PostMapper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.jsoup.select.Collector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -61,6 +64,9 @@ public class PostResource {
 
     @Inject
     private UserService userService;
+
+    @Inject
+    private TagRepository tagRepository;
 
     /**
      * POST  /posts -> Create a new post.
@@ -139,17 +145,30 @@ public class PostResource {
     /**
      * GET  /posts/tags/:id -> get all the posts filter by tag id
      */
-    @RequestMapping(value = "/posts/tags/{id:\\d+}",
+    @RequestMapping(value = "/posts/tags/{tagId:\\d+}",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional(readOnly = true)
-    public ResponseEntity<List<PostDTO>> getAllPostsByTag(Pageable pageable, @PathVariable Long id)
+    public ResponseEntity<List<PostDTO>> getAllPostsByTag(Pageable pageable, @PathVariable Long tagId)
         throws URISyntaxException {
-        Page<Post> page = postRepository.findByUserIsCurrentUserAndTagId(pageable, id);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/posts/tags/" + id);
 
-        return new ResponseEntity<>(page.getContent().stream()
+        Tag tag = tagRepository.findOne(tagId);
+
+        if (tag == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        Page<Post> page = postRepository.findUserPostsByTag(pageable, SecurityUtils.getCurrentUserLogin(), tagId);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/posts/tags/" + tagId);
+
+        List<Long> ids = page.getContent().stream()
+            .map(Post::getId)
+            .collect(Collectors.toList());
+
+        List<Post> posts = postRepository.findByIdIn(ids);
+
+        return new ResponseEntity<>(posts.stream()
             .map(postMapper::postToSimplePostDTO)
             .collect(Collectors.toCollection(LinkedList::new)), headers, HttpStatus.OK);
     }
