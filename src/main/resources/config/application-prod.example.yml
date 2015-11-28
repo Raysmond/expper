@@ -33,6 +33,10 @@ spring:
             hibernate.cache.use_query_cache: false
             hibernate.generate_statistics: false
             # hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
+    data:
+        elasticsearch:
+            cluster-name: elasticsearch
+            cluster-nodes: 127.0.0.1:9300
     thymeleaf:
         mode: HTML5
         cache: true

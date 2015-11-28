@@ -9,6 +9,7 @@ import com.expper.domain.enumeration.PostStatus;
 import com.expper.repository.PostRepository;
 import com.expper.repository.TagRepository;
 import com.expper.repository.search.PostSearchRepository;
+import com.expper.service.search.PostSearchService;
 import com.expper.service.util.StringUtil;
 import com.expper.web.rest.dto.PostDTO;
 import com.expper.web.rest.dto.PostTagCountDTO;
@@ -64,7 +65,7 @@ public class PostService {
     private TagRepository tagRepository;
 
     @Autowired
-    private PostSearchRepository postSearchRepository;
+    private PostSearchService PostSearchService;
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
@@ -111,7 +112,7 @@ public class PostService {
 
             postRepository.save(post);
             postRepository.flush();
-            postSearchRepository.save(post);
+            PostSearchService.index(post);
 
             rabbitTemplate.convertAndSend(RabbitmqConfiguration.QUEUE_GET_ARTICLE, post);
         }
@@ -154,7 +155,7 @@ public class PostService {
      */
     public void saveNewPost(Post post) {
         postRepository.save(post);
-        postSearchRepository.save(post);
+        PostSearchService.index(post);
 
         if (post.getStatus() == PostStatus.PUBLIC) {
             hotPostService.addHotPost(post);
@@ -181,8 +182,7 @@ public class PostService {
     })
     @Transactional
     public Post updatePost(Post post) {
-        Post oldPost = postRepository.findOne(post.getId());
-        oldPost.getTags().size();
+        Post oldPost = postRepository.findPostWithTags(post.getId());
         PostStatus oldStatus = oldPost.getStatus();
 
         // Delete from hot post set of related tags
@@ -197,7 +197,7 @@ public class PostService {
         postRepository.flush();
         result.getTags().size();
 
-        postSearchRepository.save(post);
+        PostSearchService.index(result);
 
         if (oldStatus == PostStatus.PRIVATE && result.getStatus() == PostStatus.PUBLIC) {
             newPostsService.add(result);
@@ -240,7 +240,7 @@ public class PostService {
             tags.forEach(tagService::decreasePostCountByOne); // 标签文章统计需要减一
         }
 
-        postSearchRepository.delete(post.getId());
+        PostSearchService.deleteIndex(post.getId());
     }
 
     @Timed

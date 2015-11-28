@@ -13,6 +13,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.elasticsearch.annotations.Parent;
 
 import java.time.ZonedDateTime;
 
@@ -21,7 +24,7 @@ import java.time.ZonedDateTime;
  */
 @Entity
 @Table(name = "post")
-@Document(indexName = "post")
+@Document(indexName = "post", type = "post")
 public class Post extends AbstractModel implements Serializable {
 
     public static final int MAX_SUMMARY_SIZE = 300;

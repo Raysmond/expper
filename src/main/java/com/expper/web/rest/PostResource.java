@@ -113,6 +113,7 @@ public class PostResource {
         }
 
         Post post = postMapper.postDTOToPost(postDTO);
+        post.setUser(userService.getCurrentUser());
 
         Post result = postService.updatePost(post);
 
@@ -135,8 +136,8 @@ public class PostResource {
         if (keywords.trim().equals("")) {
             page = postRepository.findUserPosts(userService.getCurrentUserId(), pageable);
         } else {
-            // page = postRepository.searchUserPosts(pageable, userService.getCurrentUserId(), keywords.toUpperCase());
-            page = postSearchRepository.findByTitleLike(keywords, pageable);
+//            page = postRepository.searchUserPosts(pageable, userService.getCurrentUserId(), keywords.toUpperCase());
+            page = postSearchRepository.searchUserPosts(keywords, SecurityUtils.getCurrentUserLogin(), pageable);
         }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/posts");
         return new ResponseEntity<>(page.getContent().stream()

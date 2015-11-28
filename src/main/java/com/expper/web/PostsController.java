@@ -13,6 +13,7 @@ import com.expper.service.UserService;
 import com.expper.service.VoteService;
 import com.expper.web.exceptions.PageNotFoundException;
 import com.expper.service.CountingService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import java.util.List;
 
 /**
@@ -90,5 +92,13 @@ public class PostsController {
         model.addAttribute("post", post);
         model.addAttribute("counting", countingService.getPostCounting(id));
         return "posts/show";
+    }
+
+    @RequestMapping(value = "search", method = RequestMethod.GET)
+    @Timed
+    public String search(@RequestParam(defaultValue = "1") int page, Model model) {
+        page = page < 1 ? 1 : page - 1;
+
+        return "posts/search";
     }
 }

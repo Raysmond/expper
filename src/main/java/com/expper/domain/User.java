@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Email;
+import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -21,6 +22,7 @@ import java.time.ZonedDateTime;
  */
 @Entity
 @Table(name = "jhi_user")
+@Document(indexName = "user", type = "user")
 public class User extends AbstractAuditingEntity implements Serializable {
 
     @Id
@@ -85,7 +87,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
     private Set<PersistentToken> persistentTokens = new HashSet<>();
 
-    // Expper fields
     @JsonIgnore
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "user")
     private Set<Tag> tags = new HashSet<>();

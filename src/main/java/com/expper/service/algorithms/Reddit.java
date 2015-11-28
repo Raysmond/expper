@@ -35,7 +35,8 @@ public class Reddit {
 
     public static double hot(int ups, int downs, ZonedDateTime date) {
         int score = score(ups, downs);
-        double order = Math.log10(Math.max(Math.abs(score), 1));
+        // double order = Math.log10(Math.max(Math.abs(score), 1));
+        double order = Math.log(Math.max(Math.abs(score), 1));  // 换成自然对数，网站开始时点赞数太少
         int sign = score > 0 ? 1 : (score < 0 ? -1 : 0);
         return order + (double) (sign * age(date)) / 45000.0;
     }
