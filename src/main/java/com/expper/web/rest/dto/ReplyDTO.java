@@ -21,7 +21,7 @@ public class ReplyDTO implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(max = 65535)
+    @Size(min = 3, max = 65535)
     private String content;
 
     private ReplyStatus status;

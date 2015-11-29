@@ -16,6 +16,11 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * @author Raysmond<i@raysmond.com>
  */
@@ -33,11 +38,29 @@ public class ReplyService {
     @Autowired
     private MessageService messageService;
 
+    private String updateAtUser(String content) {
+        Matcher atUsers = Pattern.compile("\\@[0-9a-zA-Z]+").matcher(content);
+
+        Set<String> names = new HashSet<>();
+        while (atUsers.find()) {
+            names.add(atUsers.group().substring(1));
+        }
+
+        for (String name : names) {
+            content = content.replace("@" + name + " ", "<a href=\"/u/" + name + "\">@" + name + "</a>&nbsp;");
+        }
+
+        return content;
+    }
+
     public Reply createReply(ReplyDTO replyDTO, User user) {
         replyDTO.setUserId(user.getId());
         Reply reply = replyDTO.toReply();
 
-        reply.setContent(Jsoup.clean(reply.getContent(), Whitelist.basicWithImages()));
+        String content = Jsoup.clean(reply.getContent(), Whitelist.basicWithImages());
+        content = updateAtUser(content);
+
+        reply.setContent(content);
         reply.setStatus(ReplyStatus.ACTIVE);
 
         Reply result = replyRepository.save(reply);
@@ -48,7 +71,7 @@ public class ReplyService {
         return result;
     }
 
-    private void afterCreatingReply(Reply reply){
+    private void afterCreatingReply(Reply reply) {
         countingService.incReplies(reply.getPost().getId());
         rabbitTemplate.convertAndSend(RabbitmqConfiguration.QUEUE_UPDATE_POST_SCORE, reply.getPost());
         messageService.newReplyMessage(reply);

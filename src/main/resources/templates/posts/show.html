@@ -78,8 +78,7 @@
                     <a href="/u/{{reply.username}}">{{reply.username}}</a>
                     <span>{{reply.created_at_s}}</span>
                   </div>
-                  <div class="reply-body">
-                    {{reply.content}}
+                  <div class="reply-body" ng-bind-html="reply.content | unsafe">
                   </div>
                 </div>
               </div>

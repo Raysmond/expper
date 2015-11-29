@@ -17,7 +17,6 @@ angular.module('expperApp')
         });
 
         $scope.highlightCode = function(){
-          console.log("highlighting post code");
           $('.content pre').each(function(i, block) {
             hljs.highlightBlock(block);
           });

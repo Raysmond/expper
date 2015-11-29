@@ -2,6 +2,7 @@ package com.expper.service;
 
 import com.expper.domain.Message;
 import com.expper.domain.Post;
+import com.expper.domain.Reply;
 import com.expper.domain.User;
 import com.expper.domain.enumeration.MessageType;
 import com.expper.domain.enumeration.PostStatus;
@@ -19,7 +20,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -142,19 +146,14 @@ public class RabbitConsumer {
                 post = postRepository.findOne(message.getPost().getId());
                 message.setToUser(post.getUser());
 
-                // TODO: Clean html util?
-                message.setContent(Jsoup.clean(message.getContent(), Whitelist.basic()));
-
-                messageService.createMessage(message);
-
-                if (Objects.equals(message.getToUser().getId(), message.getByUser().getId())) {
-                    return;
+                if (!message.getToUser().getId().equals(message.getByUser().getId())){
+                    messageService.createMessage(message);
                 }
 
-                Matcher atUsers = Pattern.compile("\\@[0-9a-zA-Z]+")
-                    .matcher(message.getContent());
+                Matcher atUsers = Pattern.compile("\\@[0-9a-zA-Z]+").matcher(message.getContent());
                 while (atUsers.find()) {
                     String name = atUsers.group().substring(1);
+
                     User user = userRepository.findByLogin(name);
 
                     if (user != null) {
@@ -166,6 +165,7 @@ public class RabbitConsumer {
                                 MessageType.NEW_REPLY_TO_REPLY));
                     }
                 }
+
 
                 break;
 

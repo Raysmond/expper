@@ -21,7 +21,6 @@ angular.module('expperApp', ['ngResource', 'ui.router'])
 
 function activeUrls() {
   var path = document.location.pathname;
-  console.log("current path: " + path);
   // 话题
   $('ul.topics-list > li > a').each(function() {
     if (encodeURI($(this).attr('href')) == path) {

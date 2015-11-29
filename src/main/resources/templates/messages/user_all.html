@@ -59,7 +59,7 @@
                     </div>
 
                     <div class="message-body">
-                        <div th:text="${message.content}" th:if="${message.type.toString() != 'NEW_VOTE'}"></div>
+                        <div th:utext="${message.content}" th:if="${message.type.toString() != 'NEW_VOTE'}"></div>
                     </div>
                 </div>
             </div>

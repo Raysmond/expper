@@ -729,13 +729,19 @@ blockquote {
   width: 100%;
 
   textarea{
-  min-height: 120px;
+    min-height: 120px;
   }
 
   button{
-  float: right;
+    float: right;
+  }
+
+  .simditor .simditor-body{
+    min-height: 200px;
   }
 }
+
+
 
 img {
   max-width: 100%;

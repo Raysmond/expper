@@ -107,7 +107,8 @@ public class PostsController {
         long totalElements = 0l;
 
         if (!query.trim().isEmpty()) {
-            Page<Post> posts = postSearchRepository.findByTitleLikeAndStatus(query.toLowerCase(), PostStatus.PUBLIC, new PageRequest(page, PAGE_SIZE));
+            String q = query.trim().toLowerCase().replaceAll("\\s", "+");
+            Page<Post> posts = postSearchRepository.findByTitleLikeAndStatus(q, PostStatus.PUBLIC, new PageRequest(page, PAGE_SIZE));
             List<Post> content = posts.getContent();
             model.addAttribute("posts", content);
             model.addAttribute("totalPages", posts.getTotalPages());

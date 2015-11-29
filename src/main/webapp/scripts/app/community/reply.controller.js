@@ -18,6 +18,26 @@ angular.module('expperApp').controller('ReplyController',
       return params[params.length - 1];
     };
 
+
+    $scope.initEditor = function(){
+        $(function(){
+            $scope.editor = new Simditor({
+                textarea: $('#reply-content'),
+                // markdown: true,
+                toolbar: ['bold', 'italic', 'underline', '|', 'ol', 'ul', 'blockquote', 'code', '|', 'link', 'image', 'hr', '|', 'indent', 'outdent', '|', 'markdown']
+            });
+
+            setInterval(function(){
+                $scope.reply.content = $scope.editor.getValue();
+                if($scope.reply.content.length - 7 >= 3){
+                    $('.alert-size').hide();
+                }
+            }, 1000);
+        });
+    };
+
+    $scope.initEditor();
+
     // load all post replies by page
     $scope.loadAll = function() {
       Reply.query({
@@ -37,11 +57,13 @@ angular.module('expperApp').controller('ReplyController',
           $scope.showLoadMore = $scope.page < $scope.pages - 1;
         });
     };
+
     $scope.reset = function() {
       $scope.page = 0;
       $scope.replies = [];
       $scope.loadAll();
     };
+
     $scope.loadPage = function(page) {
       $scope.page = page;
       $scope.loadAll();
@@ -91,6 +113,11 @@ angular.module('expperApp').controller('ReplyController',
     };
 
     $scope.save = function() {
+      $scope.reply.content = $scope.editor.getValue();
+      if($scope.reply.content.length - 7 < 3){
+          $('.alert-size').show();
+          return;
+      }
       if ($scope.reply.id != null) {
         Reply.update($scope.reply, onSaveFinished, onErrorResponse);
       } else {
@@ -99,12 +126,21 @@ angular.module('expperApp').controller('ReplyController',
     };
 
     $scope.replyTo = function(reply) {
+      $scope.reply.content  = $scope.editor.getValue();
+
       if ($scope.reply.content == undefined) {
         $scope.reply.content = '';
       }
+
       $scope.reply.reply_to_id = reply.id;
-      $scope.reply.content = "@" + reply.username + ' ' + $scope.reply.content;
-      $('.reply-form textarea').focus();
+
+      if($scope.reply.content.endsWith('</p>')){
+          $scope.reply.content = $scope.reply.content.substr(0, $scope.reply.content.length - 4) + " @" + reply.username + ' </p>';
+      } else {
+          $scope.reply.content += " @" + reply.username + ' ';
+      }
+
+      $scope.editor.setValue($scope.reply.content);
     };
 
     $scope.refresh = function() {
@@ -115,7 +151,7 @@ angular.module('expperApp').controller('ReplyController',
     $scope.clear = function() {
       $scope.reply = {
         post_id: $scope.postId,
-        content: '',
+        content: ''
       };
     };
-  });
+  }).filter('unsafe', function($sce) { return $sce.trustAsHtml; });
