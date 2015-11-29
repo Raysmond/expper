@@ -1023,6 +1023,28 @@ ul.pagination {
   padding-right: 20px;
 }
 
+// search posts block
+.search-posts-block{
+
+}
+.panel-heading form.query-posts-form{
+  margin: 5px 0;
+
+  input.form-control{
+    font-size: 1.0em;
+    padding: 8px 12px;
+    height: 38px;
+  }
+}
+
+.navbar .query-posts-form{
+  input.form-control {
+    border-radius: 40px;
+  }
+}
+
+// END
+
 .block > .panel-default > .panel-footer{
   text-align: right;
 

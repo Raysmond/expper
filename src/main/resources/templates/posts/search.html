@@ -2,20 +2,32 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="index">
 <head>
-    <title th:inline="text">搜索文章 - Expper</title>
+    <title th:inline="text" th:text="'搜索:'+${query} + ' - Expper'"></title>
 </head>
 <body>
 <div layout:fragment="content">
-    <div class="block posts-list-block">
+    <div class="block posts-list-block search-posts-block">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h1 class="title"><i class="fa fa-heart-o"></i>搜索</h1>
+                <form th:action="@{/posts/search}" method="get" class="query-posts-form">
+                    <input type="text" class="form-control" name="q" th:value="${query}" placeholder="搜索文章..." />
+                </form>
             </div>
-            <div class="panel-body" layout:include="posts/_posts :: posts"></div>
+            <div class="panel-body">
+                <div th:if="${!query.isEmpty()}">
+                    <div class="search-result-summary">
+                        搜索到相关文章<span th:text="${totalElements}"></span>篇
+                        <span th:if="${totalElements>0}">
+                            ，展示第<span th:text="${page}+'/'+${totalPages}"></span>页
+                        </span>
+                    </div>
+                    <div layout:include="posts/_posts :: posts"></div>
+                </div>
+            </div>
             <div class="pagination">
-                <a class="btn btn-default btn-sm prev" th:if="${page>1}" th:href="'?page=' + ${page-1}"><i class="fa fa-long-arrow-left"></i> 上一页</a>
+                <a class="btn btn-default btn-sm prev" th:if="${page>1}" th:href="@{/posts/search(q=${query},page=${page-1})}"><i class="fa fa-long-arrow-left"></i> 上一页</a>
                 <span class="pages-info" th:if="${totalPages>1}">第<span th:text="${page} + '/' + ${totalPages}"></span>页</span>
-                <a class="btn btn-default btn-sm next" th:if="${totalPages>page}" th:href="'?page=' + ${page+1}">下一页 <i class="fa fa-long-arrow-right"></i></a>
+                <a class="btn btn-default btn-sm next" th:if="${totalPages>page}" th:href="@{/posts/search(q=${query},page=${page+1})}">下一页 <i class="fa fa-long-arrow-right"></i></a>
             </div>
         </div>
     </div>

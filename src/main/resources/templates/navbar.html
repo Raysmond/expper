@@ -33,6 +33,12 @@
                 </li>
             </ul>
 
+            <form class="navbar-form navbar-left query-posts-form" role="search"  th:action="@{/posts/search}" method="get">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="q" th:value="${query}" placeholder="搜索文章" />
+                </div>
+            </form>
+
             <ul class="nav navbar-nav navbar-right" sec:authorize="!isAuthenticated()">
                 <li><a href="/me/#login"><span>登录</span></a></li>
                 <li><a href="/me/#register"><span>注册</span></a></li>
