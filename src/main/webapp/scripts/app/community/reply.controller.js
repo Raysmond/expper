@@ -153,5 +153,6 @@ angular.module('expperApp').controller('ReplyController',
         post_id: $scope.postId,
         content: ''
       };
+      $scope.editor.setValue('');
     };
   }).filter('unsafe', function($sce) { return $sce.trustAsHtml; });
