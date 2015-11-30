@@ -83,6 +83,11 @@ public class Post extends AbstractModel implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "post")
     private Set<Reply> replyList = new HashSet<>();
 
+
+    @JsonIgnore
+    @OneToMany(orphanRemoval = true, mappedBy = "post")
+    private Set<Message> messages = new HashSet<>();
+
     // Up votes count
     @Column(name = "votes_up", nullable = false)
     public int votesUp = 0;

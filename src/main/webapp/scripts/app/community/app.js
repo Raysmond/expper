@@ -39,14 +39,7 @@ function activeUrls() {
   }
 
   if (path.startsWith('/tags')) {
-    $('ul.navbar-nav li:first').next().addClass('active');
-  }
-
-  // 热门/最新排序
-  if (document.location.search.indexOf('sort=new') > 0 || path == '/posts/new') {
-    $('.orders a:last').addClass('active');
-  } else {
-    $('.orders a:first').addClass('active');
+    $('ul.navbar-nav > li:first').next().addClass('active');
   }
 };
 

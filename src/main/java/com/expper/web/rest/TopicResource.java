@@ -46,7 +46,6 @@ public class TopicResource {
     @RequestMapping(value = "/topics",
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
     public ResponseEntity<Topic> createTopic(@Valid @RequestBody Topic topic) throws URISyntaxException {
         log.debug("REST request to save Topic : {}", topic);
         if (topic.getId() != null) {
@@ -64,7 +63,6 @@ public class TopicResource {
     @RequestMapping(value = "/topics",
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
     public ResponseEntity<Topic> updateTopic(@Valid @RequestBody Topic topic) throws URISyntaxException {
         log.debug("REST request to update Topic : {}", topic);
         if (topic.getId() == null) {
@@ -82,7 +80,6 @@ public class TopicResource {
     @RequestMapping(value = "/topics",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
     public ResponseEntity<List<Topic>> getAllTopics(Pageable pageable)
         throws URISyntaxException {
         Pageable pageRequest = new PageRequest(pageable.getPageNumber(), pageable.getPageSize(), Sort.Direction.DESC, "weight");
@@ -97,7 +94,6 @@ public class TopicResource {
     @RequestMapping(value = "/topics/{id}",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
     public ResponseEntity<Topic> getTopic(@PathVariable Long id) {
         log.debug("REST request to get Topic : {}", id);
         return Optional.ofNullable(topicRepository.findOneWithEagerRelationships(id))
@@ -113,7 +109,6 @@ public class TopicResource {
     @RequestMapping(value = "/topics/{id}",
         method = RequestMethod.DELETE,
         produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
     public ResponseEntity<Void> deleteTopic(@PathVariable Long id) {
         log.debug("REST request to delete Topic : {}", id);
         topicRepository.delete(id);
