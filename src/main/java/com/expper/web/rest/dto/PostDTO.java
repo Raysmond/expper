@@ -4,6 +4,7 @@ import javax.validation.constraints.*;
 
 import java.io.Serializable;
 
+import com.expper.domain.Post;
 import com.expper.domain.Tag;
 
 import org.joda.time.DateTime;
@@ -31,6 +32,7 @@ public class PostDTO implements Serializable {
 
     private String author;
 
+    @Size(max = Post.MAX_SUMMARY_SIZE + 7, message = "{validation.post.summary.size}")
     private String summary;
 
     @Size(max = 1024568)

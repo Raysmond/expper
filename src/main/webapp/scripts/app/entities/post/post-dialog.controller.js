@@ -9,7 +9,21 @@ angular.module('expperApp').controller('PostDialogController', ['$scope',
     if($location.search().url != undefined){
         $scope.post.url = $location.search().url;
         $scope.post.status = 'PRIVATE';
-    }
+    };
+
+    $scope.initEditor = function(){
+        $scope.editor = new Simditor({
+            textarea: $('#field_content'),
+            // markdown: true,
+            toolbar: ['bold', 'italic', 'underline', '|', 'ol', 'ul', 'blockquote', 'code', '|', 'link', 'image', 'hr', '|', 'indent', 'outdent', '|', 'markdown']
+        });
+
+        $scope.summaryEditor = new Simditor({
+            textarea: $('#field_summary'),
+            // markdown: true,
+            toolbar: ['bold', 'italic', 'underline', '|', 'ol', 'ul', 'blockquote', 'code', '|', 'link', 'image', 'hr', '|', 'indent', 'outdent', '|', 'markdown']
+        });
+    };
 
     $scope.initTagInput = function() {
       $("#tag-input").tokenInput(
@@ -43,6 +57,9 @@ angular.module('expperApp').controller('PostDialogController', ['$scope',
       }, function(result) {
         $scope.post = result;
         $scope.initTagInput();
+        $scope.initEditor();
+        $scope.editor.setValue(result.content);
+        $scope.summaryEditor.setValue(result.summary);
       });
     };
 
@@ -53,9 +70,18 @@ angular.module('expperApp').controller('PostDialogController', ['$scope',
       $modalInstance.close(result);
     };
 
+    $scope.showTab = function(tab){
+      $('.tab-content .tab-pane').removeClass('active');
+      $('#'+tab).addClass('active');
+
+      $('.nav-tabs > li').removeClass('active');
+      $('.nav-tabs > li.' + tab).addClass('active');
+    };
+
     $scope.save = function() {
       $scope.post.tags = $scope.getTagInput();
-
+      $scope.post.content = $scope.editor.getValue();
+      $scope.post.summary = $scope.summaryEditor.getValue();
       if ($scope.post.id != null) {
         Post.update($scope.post, onSaveFinished);
       } else {

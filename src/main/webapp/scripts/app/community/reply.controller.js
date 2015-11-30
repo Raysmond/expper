@@ -104,6 +104,7 @@ angular.module('expperApp').controller('ReplyController',
       //$modalInstance.close(result);
       $scope.replies.push(result);
       $scope.clear();
+      $scope.editor.setValue('');
     };
 
     var onErrorResponse = function(result) {
@@ -153,6 +154,5 @@ angular.module('expperApp').controller('ReplyController',
         post_id: $scope.postId,
         content: ''
       };
-      $scope.editor.setValue('');
     };
   }).filter('unsafe', function($sce) { return $sce.trustAsHtml; });

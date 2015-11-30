@@ -18,10 +18,6 @@
                 <p class="help-block" ng-show="editForm.title.$error.required">必填</p>
             </div>
         </div>
-        <!-- <div class="form-group">
-            <label for="field_url">原文链接</label>
-            <input type="text" class="form-control" name="url" id="field_url" ng-model="post.url" readonly>
-        </div> -->
         <div class="row">
           <div class="col-md-4">
             <div class="form-group">
@@ -51,16 +47,19 @@
           <input type="text" class="form-control" id="tag-input" />
         </div>
 
-        <!-- <div class="form-group">
-            <label for="field_domain">标签</label>
-            <input type="text" class="form-control" name="raw_tags" id="field_tags" ng-model="post.raw_tags" placeholder="以英文逗号分割">
-        </div> -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="tab-content active"><a ng-click="showTab('tab-content')">正文</a></li>
+            <li role="presentation" class="tab-summary"><a ng-click="showTab('tab-summary')">摘要</a></li>
+        </ul>
 
-        <div class="form-group">
-            <label for="field_content">内容</label>
-            <textarea type="text" class="form-control" name="content" id="field_content"
-                    ng-model="post.content"
-                    ng-maxlength="1048576" rows="10"></textarea>
+        <!-- Tab panes -->
+        <div class="tab-content" style="margin-top: -1px;">
+            <div role="tabpanel" class="tab-pane active" id="tab-content">
+                <textarea type="text" class="form-control" name="content" id="field_content" ng-model="post.content" rows="10"></textarea>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="tab-summary">
+                <textarea type="text" class="form-control" name="summary" placeholder="300字以内的摘要" id="field_summary" ng-model="post.summary" rows="10"></textarea>
+            </div>
         </div>
 
     </div>
