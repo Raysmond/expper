@@ -12,6 +12,7 @@ This is the source code [https://www.expper.com](https://www.expper.com) website
 - Jhipster 2.24.0
 - Redis 3.0+
 - RabbitMQ 3.5.6+
+- ElasticSearch
 - Node.js 
 
 ## Installation in development
@@ -29,9 +30,11 @@ This is the source code [https://www.expper.com](https://www.expper.com) website
     # in Mac OS X
     brew install redis
     brew install rabbitmq
+    brew install elasticsearch
     
     redis-server
     rabbitmq-server
+    elasticsearch
     ```
     
 3. Create and modify the configuration files according to your settings
@@ -75,4 +78,4 @@ and can be run by starting Spring Boot in one terminal (`./gradlew bootRun`) and
 
 
 ## License
-This project is licensed under GPLv3 license.
+Expper is licensed under GPLv3 license.
