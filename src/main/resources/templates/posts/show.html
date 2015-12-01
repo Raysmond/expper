@@ -52,6 +52,9 @@
               <a th:href="'/u/'+${post.user.login}" th:text="${post.user.login}"></a> 分享于
               <span th:text="${@viewUtils.timeAgo(post.shareAt)}"></span>
               </span>
+              <span sec:authorize="hasRole('ADMIN')">
+                  <a th:href="'/me/#posts/'+${post.id}+'/edit'"><i class="fa fa-edit"></i></a>
+              </span>
             </div>
           </div>
           <div class="panel-body">

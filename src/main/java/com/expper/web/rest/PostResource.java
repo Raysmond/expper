@@ -1,6 +1,8 @@
 package com.expper.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.expper.config.Constants;
+import com.expper.domain.Authority;
 import com.expper.domain.Post;
 import com.expper.domain.Tag;
 import com.expper.domain.User;
@@ -8,6 +10,7 @@ import com.expper.domain.enumeration.PostStatus;
 import com.expper.repository.PostRepository;
 import com.expper.repository.TagRepository;
 import com.expper.repository.search.PostSearchRepository;
+import com.expper.security.AuthoritiesConstants;
 import com.expper.security.SecurityUtils;
 import com.expper.service.PostService;
 import com.expper.service.UserService;
@@ -108,13 +111,12 @@ public class PostResource {
         }
 
         // Cannot operate on other users' posts
-        if (!Objects.equals(postDTO.getUserId(), userService.getCurrentUserId())) {
+        if (!(SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)
+            || Objects.equals(postDTO.getUserId(), userService.getCurrentUserId()))) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
         Post post = postMapper.postDTOToPost(postDTO);
-        post.setUser(userService.getCurrentUser());
-
         Post result = postService.updatePost(post);
 
         return ResponseEntity.ok()
@@ -198,6 +200,11 @@ public class PostResource {
         log.debug("REST request to get Post : {}", id);
 
         Post post = postRepository.findUserPost(id, userService.getCurrentUserId());
+
+        // Enable for admin
+        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+            post = postRepository.findPostWithTags(id);
+        }
 
         return Optional.ofNullable(post)
             .map(postMapper::postToPostDTO)

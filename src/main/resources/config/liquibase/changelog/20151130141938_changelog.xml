@@ -12,32 +12,7 @@
     <changeSet author="Raysmond (generated)" id="1448864391133-4">
         <addUniqueConstraint columnNames="login" constraintName="UC_JHI_USERLOGIN_COL" tableName="jhi_user"/>
     </changeSet>
-    <changeSet author="Raysmond (generated)" id="1448864391133-5">
-        <addUniqueConstraint columnNames="name" constraintName="UC_TOPICNAME_COL" tableName="topic"/>
-    </changeSet>
-    <changeSet author="Raysmond (generated)" id="1448864391133-6">
-        <dropSequence sequenceName="jhi_persistent_audit_event_event_id_seq"/>
-    </changeSet>
-    <changeSet author="Raysmond (generated)" id="1448864391133-7">
-        <dropSequence sequenceName="jhi_user_id_seq"/>
-    </changeSet>
-    <changeSet author="Raysmond (generated)" id="1448864391133-8">
-        <dropSequence sequenceName="message_id_seq"/>
-    </changeSet>
-    <changeSet author="Raysmond (generated)" id="1448864391133-9">
-        <dropSequence sequenceName="post_id_seq"/>
-    </changeSet>
-    <changeSet author="Raysmond (generated)" id="1448864391133-10">
-        <dropSequence sequenceName="reply_id_seq"/>
-    </changeSet>
-    <changeSet author="Raysmond (generated)" id="1448864391133-11">
-        <dropSequence sequenceName="topic_id_seq"/>
-    </changeSet>
-    <changeSet author="Raysmond (generated)" id="1448864391133-12">
-        <dropSequence sequenceName="votes_id_seq"/>
-    </changeSet>
-    <changeSet author="Raysmond (generated)" id="1448864391133-13">
-        <addDefaultValue columnDataType="bigint" columnName="id" defaultValueComputed="nextval('tags_id_seq'::regclass)" tableName="tags"/>
-        <addAutoIncrement columnDataType="bigint" columnName="id" tableName="tags"/>
-    </changeSet>
+    <!--<changeSet author="Raysmond (generated)" id="1448864391133-5">-->
+        <!--<addUniqueConstraint columnNames="name" constraintName="UC_TOPICNAME_COL" tableName="topic"/>-->
+    <!--</changeSet>-->
 </databaseChangeLog>
