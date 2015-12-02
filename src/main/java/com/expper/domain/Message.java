@@ -20,6 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.Size;
 
 
 /**
@@ -31,6 +32,8 @@ public class Message extends AbstractModel {
 
     private String title;
 
+    @Size(max = 65535)
+    @Column(name = "content", length = 65535)
     private String content;
 
     @JsonProperty("to_user")

@@ -23,13 +23,17 @@ public class PostDTO implements Serializable {
 
     private Long id;
 
+    @Size(max = 255)
     private String title;
 
     @NotNull
+    @Size(max = 255)
     private String url;
 
+    @Size(max = 255)
     private String domain;
 
+    @Size(max = 255)
     private String author;
 
     @Size(max = Post.MAX_SUMMARY_SIZE + 7, message = "{validation.post.summary.size}")
