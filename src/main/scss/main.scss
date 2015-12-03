@@ -327,6 +327,7 @@ blockquote {
   .post {
     border-bottom: 1px #ddd solid;
     position: relative;
+    overflow: hidden;
     z-index: 1;
     &:hover{
       background: #f9f9f9;
@@ -346,6 +347,7 @@ blockquote {
       position: absolute;
       margin-left: 100px;
       z-index: 2;
+      text-indent: -1000px;
     }
     a.post-title {
       font-weight: 400;

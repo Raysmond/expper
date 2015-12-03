@@ -1,50 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-<body>
-<th:block layout:fragment="posts">
-    <div class="posts-list">
+  <head></head>
+  <body>
+    <th:block layout:fragment="posts">
+      <div class="posts-list">
         <div th:each="post : ${posts}" class="post row" th:classappend="'post-'+${post.id}" th:attr="data-id=${post.id}">
-            <a class="link-post" th:href="'/posts/'+${post.id}"></a>
-            <div class="count">
-                <span class="badge" th:text="${counting.get(post.id).replies}"></span>
+          <a class="link-post" th:href="'/posts/'+${post.id}" th:text="${post.title}"></a>
+          <div class="count">
+            <span class="badge" th:text="${counting.get(post.id).replies}"></span>
+          </div>
+          <div class="votes">
+            <button class="vote-up btn btn-xs btn-default" th:classappend="${votes.get(post.id)} != null and ${votes.get(post.id).type.toString()} == 'UP' ? 'active' : ''">
+              <i class="fa fa-chevron-up"></i>
+            </button>
+            <span class="vote-value" th:text="${counting.get(post.id).votes}"></span>
+            <button class="vote-down btn btn-xs btn-default" th:classappend="${votes.get(post.id)} != null and ${votes.get(post.id).type.toString()} == 'DOWN' ? 'active' : ''">
+              <i class="fa fa-chevron-down"></i>
+            </button>
+          </div>
+          <div class="picture">
+            <a th:href="'/u/'+${post.user.login}" th:utext="${@viewUtils.userPicture(post.getUser())}"></a>
+          </div>
+          <div class="body">
+            <div class="title">
+              <a class="post-title" th:href="${post.url}" target="_blank">
+                <span th:text="${post.title}"></span>
+                <span class="domain">
+                  <i class="fa fa-share"></i>
+                  <span th:text="${post.domain}"></span>
+                </span>
+              </a>
             </div>
-            <div class="votes">
-                <button class="vote-up btn btn-xs btn-default" th:classappend="${votes.get(post.id)} != null and ${votes.get(post.id).type.toString()} == 'UP' ? 'active' : ''">
-                    <i class="fa fa-chevron-up"></i>
-                </button>
-                <span class="vote-value" th:text="${counting.get(post.id).votes}"></span>
-                <button class="vote-down btn btn-xs btn-default" th:classappend="${votes.get(post.id)} != null and ${votes.get(post.id).type.toString()} == 'DOWN' ? 'active' : ''">
-                    <i class="fa fa-chevron-down"></i></button>
+            <div class="meta">
+              <span class="tags">
+                <a class="btn btn-default btn-xs btn-tag"
+                  th:each="tag : ${post.tags}"
+                  th:text="${tag.friendlyName}"
+                  th:href="'/tags/'+${tag.name}">
+                </a>
+              </span>
+              <span class="bullet" th:classappend="${post.tags.size()} == 0 ? 'invisible' : ''">•</span>
+              <span class="author">
+                <a th:href="'/u/'+${post.user.login}" th:text="${post.user.login}"></a>
+                <span>分享于</span>
+                <span th:text="${@viewUtils.timeAgo(post.shareAt)}"></span>
+              </span>
             </div>
-            <div class="picture">
-                <a th:href="'/u/'+${post.user.login}" th:utext="${@viewUtils.userPicture(post.getUser())}"></a>
-            </div>
-            <div class="body">
-                <div class="title">
-                    <a class="post-title" th:href="${post.url}" target="_blank" >
-                      <span th:text="${post.title}"></span>
-                      <span class="domain">
-                          <i class="fa fa-share"></i>
-                          <span th:text="${post.domain}"></span>
-                      </span>
-                    </a>
-
-                </div>
-
-                <div class="meta">
-                    <span class="tags">
-                       <a class="btn btn-default btn-xs btn-tag" th:each="tag : ${post.tags}" th:text="${tag.friendlyName}" th:href="'/tags/'+${tag.name}"></a>
-                    </span>
-                    <span class="bullet" th:classappend="${post.tags.size()} == 0 ? 'invisible' : ''">•</span>
-                    <span class="author">
-                        <a th:href="'/u/'+${post.user.login}" th:text="${post.user.login}"></a>
-                        <span>分享于</span>
-                        <span th:text="${@viewUtils.timeAgo(post.shareAt)}"></span>
-                    </span>
-                </div>
-            </div>
+          </div>
         </div>
-    </div>
-</th:block>
-</body>
+      </div>
+    </th:block>
+  </body>
 </html>
