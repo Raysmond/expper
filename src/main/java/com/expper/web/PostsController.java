@@ -6,6 +6,7 @@ import com.expper.domain.Vote;
 import com.expper.domain.enumeration.PostStatus;
 import com.expper.repository.search.PostSearchRepository;
 import com.expper.security.SecurityUtils;
+import com.expper.service.HotPostService;
 import com.expper.service.NewPostsService;
 import com.expper.service.PostListService;
 import com.expper.service.PostService;
@@ -27,6 +28,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+
 /**
  * @author Raysmond<i@raysmond.com>
  */
@@ -46,7 +49,8 @@ public class PostsController {
     private VoteService voteService;
 
     @Autowired
-    private TopicsService topicsService;
+    private HotPostService hotPostService;
+
 
     @Autowired
     private UserService userService;
@@ -58,6 +62,24 @@ public class PostsController {
     private PostSearchRepository postSearchRepository;
 
     private static final int PAGE_SIZE = 20;
+
+    @RequestMapping(value = "", method = GET)
+    @Timed
+    public String hotPosts(@RequestParam(defaultValue = "1") int page, Model model) {
+        page = page < 1 ? 1 : page - 1;
+        long size = hotPostService.size();
+        long pages = size / PAGE_SIZE + (size % PAGE_SIZE != 0 ? 1 : 0);
+
+        List<Post> posts = postListService.getHotPostsOfPage(page, PAGE_SIZE);
+
+        model.addAttribute("counting", countingService.getPostListCounting(posts));
+        model.addAttribute("page", page + 1);
+        model.addAttribute("totalPages", pages);
+        model.addAttribute("posts", posts);
+        model.addAttribute("votes", voteService.getCurrentUserVoteMapFor(posts));
+
+        return "posts/hot";
+    }
 
     @RequestMapping(value = "new", method = RequestMethod.GET)
     @Timed

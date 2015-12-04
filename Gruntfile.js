@@ -172,6 +172,7 @@ module.exports = function (grunt) {
                     src: [
                         '<%= yeoman.dist %>/scripts/**/*.js',
                         '<%= yeoman.dist %>/assets/styles/**/*.css',
+                        '<%= yeoman.dist %>/assets/theme/CloudSpace/**/*.css',
                         '<%= yeoman.dist %>/assets/images/**/*.{png,jpg,jpeg,gif,webp,svg}',
                         '<%= yeoman.dist %>/assets/fonts/*'
                     ]
@@ -436,7 +437,7 @@ module.exports = function (grunt) {
         'useminPrepare',
         'ngtemplates',
         'sass:server',
-        'imagemin',
+        //'imagemin',
         'svgmin',
         'concat',
         'copy:fonts',

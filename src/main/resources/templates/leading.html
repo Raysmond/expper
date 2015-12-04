@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<!--[if IE 8 ]><html class="ie ie8" lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"> <![endif]-->
+<!--[if IE 9 ]><html class="ie ie9" lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"><!--<![endif]-->
+<head>
+    <meta charset="utf-8"/>
+    <title>Expper</title>
+    <meta name="description" content="网络文章收藏工具和分享社区"/>
+    <meta name="keywords" content="Expper, 收藏文章, 文章分享社区, 技术社区" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <!--[if IE]>
+    <script src="/assets/theme/CloudSpace/js/html5shiv.js"></script>
+    <![endif]-->
+    <!--////////// CSS Stylesheet  ///////////-->
+    <!-- build:css(src/main/webapp) /assets/styles/leading.min.css -->
+    <link rel="stylesheet" href="/assets/theme/CloudSpace/css/style.css"/>
+    <!-- endbuild -->
+    <!--////////// jQuery Source  ///////////-->
+    <!-- build:js(src/main/webapp) /scripts/leading.min.js -->
+    <script src="/bower_components/jquery/dist/jquery.js"></script>
+    <script src="/assets/theme/CloudSpace/js/jquery.easing.1.3.js"></script>
+    <script src="/assets/theme/CloudSpace/layerslider/js/greensock.js"></script>
+    <script src="/assets/theme/CloudSpace/layerslider/js/layerslider.transitions.js"></script>
+    <script src="/assets/theme/CloudSpace/layerslider/js/layerslider.kreaturamedia.jquery.js"></script>
+    <!-- endbuild -->
+
+</head>
+<body id="section-home">
+<div class="doc-loader"></div>
+<!--/////////// HEADER SECTION //////////-->
+<header>
+    <nav role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <i class="fa fa-th-list iconmobile"></i>
+                </button>
+                <a class="navbar-brand" href="/">EXPPER</a>
+            </div>
+            <div id="main-nav" class="collapse navbar-collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <!--////////// NAVIGATION MENU //////////-->
+                    <li><a href="/"><span>首页</span></a></li>
+                    <li><a href="/posts"><span>社区</span></a></li>
+                    <li><a href="/about"><span>关于</span></a></li>
+
+                </ul>
+            </div><!-- /navbar-collapse -->
+        </div><!-- /container -->
+    </nav>
+</header>
+
+<div class="main-container" layout:fragment="content"></div>
+
+<!--////////// CLOUDS BACKGROUND ////////// -->
+<div class="row hidden-xs">
+
+    <div class="col-centered" id="clouds-footer">
+
+
+    </div><!-- /clouds -->
+
+</div><!-- /row -->
+<!--////////// FOOTER SECTION ////////// -->
+<section id="footer">
+
+    <div class="container">
+
+        <div class="row">
+
+
+            <div class="col-sm-4">
+                <h5>关于</h5>
+                <p>Explore the Internet and Share Something Useful.<br/>一起分享收获知识的喜悦</p>
+
+            </div><!-- /col-sm-4 -->
+
+            <div class="col-sm-3">
+                <h5>分享社区</h5>
+                <ul class="list-unstyled">
+                    <li><a href="/posts">热门文章</a></li>
+                    <li><a href="/posts/new">最新分享</a></li>
+                    <li><a href="/topics">标签节点</a></li>
+                </ul>
+            </div><!-- /col-sm-2 -->
+
+            <div class="col-sm-2">
+                <h5>服务</h5>
+                <ul class="list-unstyled">
+                    <li><a href="https://chrome.google.com/webstore/detail/expper/lemehlnkknfbalogdboldphkjibjkhpp?utm_source=chrome-ntp-icon">Chrome插件</a></li>
+                    <li><a href="/posts/search">搜索文章</a></li>
+                </ul>
+            </div><!-- /col-sm-2 -->
+
+            <div class="col-sm-3">
+                <h5>联系</h5>
+                <address>
+                    <span>Lovely created by Raysmond.</span>
+                    <span>邮箱：<a href="mailto:raysmond@expper.com">raysmond@expper.com</a></span>
+                </address>
+
+            </div><!-- /col-sm-2 -->
+
+
+        </div><!-- /row -->
+    </div><!-- /container -->
+</section>
+
+<!--////////// SUB FOOTER SECTION ////////// -->
+<section id="sub-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <p class="copyright">Copyright &copy; 2015 Expper, All Rights Reserved.</p>
+            </div>
+            <div class="col-lg-4">
+                <ul class="social-links">
+
+                    <li>
+                        <a href="#"><i class="fa fa-facebook"></i></a><!-- Facebook Link -->
+                    </li>
+
+                    <li>
+                        <a href="#"><i class="fa fa-twitter"></i></a><!-- Twitter Link -->
+                    </li>
+
+                    <li>
+                        <a href="#"><i class="fa fa-google-plus"></i></a><!-- Google+ Link -->
+                    </li>
+
+                </ul>
+            </div><!-- /col-lg-4 -->
+        </div><!-- /row -->
+    </div><!-- /container -->
+</section>
+
+<!--////////// JAVASCRIPT FILES INCLUDES //////////-->
+<!-- build:js(src/main/webapp) /scripts/leading2.min.js -->
+<script src="/assets/theme/CloudSpace/js/bootstrap.min.js"></script>
+<script src="/assets/theme/CloudSpace/js/bootstrap-hover-dropdown.min.js"></script>
+<script src="/assets/theme/CloudSpace/js/respond.min.js"></script>
+<script src="/assets/theme/CloudSpace/js/owl.carousel.js"></script>
+<script src="/assets/theme/CloudSpace/js/jquery.ui.totop.js"></script>
+<script src="/assets/theme/CloudSpace/js/custom.js"></script>
+<!-- endbuild -->
+</body>
+</html>

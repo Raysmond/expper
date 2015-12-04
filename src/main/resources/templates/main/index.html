@@ -1,0 +1,173 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="leading">
+<head>
+    <title th:inline="text">Expper - 网络文章收藏工具和分享社区</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <!--////////// SLIDER SECTION ////////// -->
+    <section id="section-slider">
+        <div class="row" style="margin: 0px;">
+            <!-- ////////// LAYERSSLIDER STARTS HERE ////////// -->
+            <div id="main-slider" style="width: 100%; height: 470px;">
+
+                <!-- first slide -->
+                <div class="ls-slide" data-ls="transition2d:5;">
+                    <img src="/assets/images/solid-bg.jpg" class="ls-bg" alt="Slide background" />
+                    <img class="ls-l" style="top:47px;left:50%;" data-ls="offsetyin:bottom;offsetyout:bottom;offsetxin:0;offsetxout:0;fadein:false;durationout:1000;fadeout:true;delayin:600;delayout:600;" data-src="/assets/images/screen-01.png" alt="" />
+                    <img class="ls-l" style="top:85px;left:20px;width:250px" data-ls="offsetyin:bottom;offsetyout:bottom;offsetxin:0;offsetxout:0;fadein:false;durationout:1200;fadeout:true;delayin:800;delayout:800;" data-src="/assets/images/iphone-screen-left.png" alt="" />
+                    <img class="ls-l" style="top:85px;left:780px;width:250px" data-ls="offsetyin:bottom;offsetyout:bottom;offsetxin:0;offsetxout:0;fadein:false;durationout:1200;fadeout:true;delayin:1000;delayout:800;" data-src="/assets/images/iphone-screen-right.png" alt="" />
+                </div>
+
+
+                <!-- second slide -->
+                <div class="ls-slide" data-ls="transition2d:5;"><img src="/assets/images/slider-rack-bg-3.jpg" class="ls-bg" alt="Slide background" />
+                    <img class="ls-l" style="top:0px;left:430px;width:600px;white-space: nowrap;" data-ls="offsetxin:right;fadein:false;offsetyout:bottom;durationout:1000;fadeout:false;delayin:600;" data-src="/assets/images/woman.png" alt="" />
+                    <h2 class="ls-l" style="top:130px;left:80px;font-size:28px;color:#ffffff;white-space: nowrap;" data-ls="offsetxin:left;fadein:false;offsetxout:right;durationout:1000;fadeout:false;">网路文章管家</h2>
+                    <p class="ls-l"
+                       style="top:178px;left:80px;color:#ffffff;white-space: nowrap; font-size:14px; line-height: 1.7em;"
+                       data-ls="offsetxin:left;delayin:200;fadein:false;offsetxout:right;durationout:1000;fadeout:false;">
+                        Chrome插件一键保存文章
+                        <br/>
+                        标签分类，高效搜索文章
+                        <br/>
+                        统一排版，提升阅读体验
+                    </p>
+                    <!-- <a class="ls-l btn btn-primary btn-large" style="top:290px;left:80px;" data-ls="offsetxin:left;delayin:600;fadein:false;offsetxout:right;durationout:1000;fadeout:false;" href="/me/#/register">现在开始</a> -->
+                </div>
+
+                <!-- third slide -->
+                <div class="ls-slide" data-ls="transition2d:5;"><img src="/assets/images/slider-map.jpg" class="ls-bg" alt="Slide background" />
+                    <h1 class="ls-l" style="top:100px;left:400px;text-align: center;font-size:40px;color:#ffffff;white-space: nowrap;" data-ls="offsetxin:0;offsetyin:-200;easingin:easeInOutBack;offsetxout:0;offsetyout:200;durationout:600;delayin:200;">
+                        发现和分享知识
+                    </h1>
+                    <p class="ls-l" style="top:220px;left:289px;text-align: center;color:#ffffff;white-space: nowrap; font-size:14px; line-height: 1.7em;" data-ls="offsetxin:0;offsetyin:-200;easingin:easeInOutBack;offsetxout:0;offsetyout:200;durationout:600;">
+                        互联网是一个浩瀚的知识海洋，我们希望和您一起遨游，一起分享收获知识的喜悦
+                    </p>
+                    <a class="ls-l btn btn-success btn-large" style="top:300px;left:300px;" data-ls="offsetxin:0;offsetyin:bottom;offsetxout:0;offsetyout:200;durationout:600;delayin:400;" href="/posts/hot">查看社区分享</a>
+                    <a class="ls-l btn btn-primary btn-large" style="top:300px;left:540px;" data-ls="offsetxin:0;offsetyin:bottom;offsetxout:0;offsetyout:200;durationout:600;delayin:600;" href="/me/#/register">一起加入我们</a>
+                </div>
+
+
+            </div><!-- /#main-slider -->
+        </div><!-- /row -->
+        <!--////////// CLOUDS BACKGROUND ////////// -->
+        <div class="row hidden-xs">
+            <div class="col-centered" id="clouds">
+            </div><!-- /clouds -->
+        </div><!-- /row -->
+
+        <!--////////// UNDER SLIDER SECTION ////////// -->
+        <div class="under-slider">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-9">
+                        <span>Expper - 帮助您收藏和整理网络文章</span>
+
+                        <p>Expper是一个方便的网络文章收藏和管理工具，配合Chrome插件可以一键收藏文章！
+                            <br/>Expper提供的文章管理后台，统一文章格式和排版，给您的管理和阅读带来简洁和优雅的体验！
+                            <br/>加入分享社区，一起分享发现和获取知识的喜悦！</p>
+                    </div><!-- /col-sm-9 -->
+                    <div class="col-md-3">
+                        <a class="btn btn-primary btn-large wobble-vertical" href="/me/#/register">立即加入</a>
+                    </div><!-- /col-sm-3 -->
+                </div><!-- /row -->
+            </div><!-- /container -->
+        </div><!-- /under-slider -->
+
+    </section>
+
+    <!--////////// FEATURES SECTION ////////// -->
+    <section id="features">
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-md-4 feature">
+                    <img src="/assets/images/01.png" class="icon" alt="feature"/>
+                    <h2>云端收藏</h2><p>一键保存网络文章到云端存储<br/>不再头疼文章丢失</p>
+                </div><!-- /feature -->
+                <div class="col-md-4 feature">
+                    <img src="/assets/images/02.png" class="icon" alt="feature"/>
+                    <h2>高效整理文章</h2><p>便捷和强大的标签管理<br/>快速搜索标签和文章</p>
+                </div><!-- /feature -->
+                <div class="col-md-4 feature">
+                    <img src="/assets/images/03.png" class="icon" alt="feature"/>
+                    <h2>分享知识</h2><p>一起感受发现和收获知识的喜悦<br/>关注大神的分享<br/>以文会友，结交志同道合的人</p>
+                </div><!-- /feature -->
+            </div><!-- /row -->
+
+            <div class="row">
+                <div class="col-md-4 feature">
+                    <img src="/assets/images/04.png" class="icon" alt="feature"/>
+                    <h2>注重阅读体验</h2><p>简洁优雅的统一排版<br/>文章代码高亮（程序员feature）</p>
+                </div><!-- /feature -->
+                <div class="col-md-4 feature">
+                    <img src="/assets/images/05.png" class="icon" alt="feature"/>
+                    <h2>注重文章版权</h2><p>绝不公开文章全文<br/>所有分享的文章保留原文链接<br/>为您的博客和网站带去读者和流量</p>
+                </div><!-- /feature -->
+                <div class="col-md-4 feature">
+                    <img src="/assets/images/06.png" class="icon" alt="feature"/>
+                    <h2>技术社区</h2><p>目前社区主要节点分类关注IT/互联网技术<br/>等你来分享其他领域的知识</p>
+                </div><!-- /feature -->
+            </div><!-- /row -->
+
+        </div><!-- /container -->
+
+    </section>
+
+
+
+    <!--////////// MORE FEATURES SECTION ////////// -->
+    <section id="key-features">
+
+        <div class="container">
+            <div class="row">
+
+                <div class="section-title">
+                    <h1>探索和发现知识</h1>
+                    <h2></h2>
+                </div><!-- /section-title -->
+
+                <div class="col-sm-4">
+
+                    <img src="/assets/images/feature-01.png" alt="feature-1" class="img-responsive"/>
+                    <h5>Chrome插件</h5>
+                    <p>配合Chrome插件一键保存网络文章，简单快速</p>
+
+
+                </div><!-- /col-sm-4 -->
+
+
+                <div class="col-sm-4">
+
+                    <img src="/assets/images/feature-02.png" alt="feature-2" class="img-responsive"/>
+                    <h5>高效整理，安心阅读</h5>
+                    <p>标签分类，快速检索，统一排版，安心阅读</p>
+
+                </div><!-- /col-sm-4 -->
+
+
+                <div class="col-sm-4">
+
+                    <img src="/assets/images/feature-03.png" alt="feature-3" class="img-responsive"/>
+                    <h5>分享知识</h5>
+                    <p>无论是你看到的文章，还是你发表在其他网站的文章，都可以拿来一起分享</p>
+
+                </div><!-- /col-sm-4 -->
+
+            </div><!-- /row -->
+            <div class="row text-center">
+
+                <a class="btn btn-primary btn-large features-btn wobble-vertical" href="/me/#/register">现在就加入</a>
+
+            </div><!-- /row -->
+        </div><!-- /container -->
+
+
+    </section>
+
+</div>
+</body>
+</html>

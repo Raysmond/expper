@@ -20,24 +20,24 @@
 //                }
 //            });
 //    });
-angular.module('expperApp')
-    .config(function ($stateProvider) {
-                $stateProvider
-                    .state('home', {
-                        parent: 'account',
-                        url: '/',
-                        data: {
-                            authorities: [],
-                            pageTitle: 'Sign in'
-                        },
-                        views: {
-                            'content@': {
-                                templateUrl: '/scripts/app/account/login/login.html',
-                                controller: 'LoginController'
-                            }
-                        },
-                        resolve: {
-
-                        }
-                    });
-            });
+//angular.module('expperApp')
+//    .config(function ($stateProvider) {
+//                $stateProvider
+//                    .state('home', {
+//                        parent: 'account',
+//                        url: '/',
+//                        data: {
+//                            authorities: [],
+//                            pageTitle: 'Sign in'
+//                        },
+//                        views: {
+//                            'content@': {
+//                                templateUrl: '/scripts/app/account/login/login.html',
+//                                controller: 'LoginController'
+//                            }
+//                        },
+//                        resolve: {
+//
+//                        }
+//                    });
+//            });
