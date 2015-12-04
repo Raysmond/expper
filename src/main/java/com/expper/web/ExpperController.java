@@ -30,7 +30,7 @@ public class ExpperController {
             return "redirect:/me";
         }
 
-        return "main/index";
+        return "leading_home";
     }
 
     @RequestMapping(value = "me", method = GET)

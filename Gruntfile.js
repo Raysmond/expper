@@ -81,7 +81,7 @@ module.exports = function (grunt) {
         cdn: {
             options: {
                 /** @required - root URL of your CDN (may contains sub-paths as shown below) */
-                cdn: 'https://dn-expper.qbox.me/static/',
+                cdn: 'https://dn-expper.qbox.me/',
                 /** @optional  - if provided both absolute and relative paths will be converted */
                 flatten: false,
                 /** @optional  - if provided will be added to the default supporting types */
@@ -172,7 +172,6 @@ module.exports = function (grunt) {
                     src: [
                         '<%= yeoman.dist %>/scripts/**/*.js',
                         '<%= yeoman.dist %>/assets/styles/**/*.css',
-                        '<%= yeoman.dist %>/assets/theme/CloudSpace/**/*.css',
                         '<%= yeoman.dist %>/assets/images/**/*.{png,jpg,jpeg,gif,webp,svg}',
                         '<%= yeoman.dist %>/assets/fonts/*'
                     ]
