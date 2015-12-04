@@ -8,7 +8,7 @@ angular.module('expperApp')
         url: '/',
         data: {
           authorities: ['ROLE_USER'],
-          pageTitle: 'Posts'
+          pageTitle: '我的文章'
         },
         views: {
           'content@': {
@@ -23,7 +23,7 @@ angular.module('expperApp')
         url: '/post/{id}',
         data: {
           authorities: ['ROLE_USER'],
-          pageTitle: 'Post'
+          pageTitle: '文章详情'
         },
         views: {
           'content@': {

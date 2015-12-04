@@ -958,5 +958,26 @@ color: #333334;
     padding-top: 50px;
     border-top: 1px #ddd solid;
 }
+#key-features h5{
+    color: #19c395;
+    text-align: center;
+}
 
+#key-features p{
+    text-align: center;
+}
+/*.btn-primary{*/
+    /*background: #19c395;*/
+/*}*/
 
+/*.btn-primary:hover{*/
+    /*background: #13b388;*/
+/*}*/
+
+/*.section-title h1{*/
+    /*color: #19c395;*/
+/*}*/
+
+/*h2{*/
+    /*color: #000;*/
+/*}*/
