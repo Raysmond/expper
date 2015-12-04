@@ -53,7 +53,7 @@ public class PostListService {
     }
 
     private List<Post> getHotPostsOfPage(int page, Set<ZSetOperations.TypedTuple<Long>> idsWithScore) throws PageNotFoundException {
-        if (idsWithScore.isEmpty()) {
+        if (page > 0 && idsWithScore.isEmpty()) {
             throw new PageNotFoundException();
         }
 
@@ -94,7 +94,7 @@ public class PostListService {
     }
 
     private List<Post> getNewPostsOfPage(int page, Set<Long> ids) throws PageNotFoundException {
-        if (ids.isEmpty()) {
+        if (page > 0 && ids.isEmpty()) {
             throw new PageNotFoundException();
         }
 
