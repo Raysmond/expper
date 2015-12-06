@@ -46,7 +46,7 @@ public class Content extends AbstractTimedModel implements Serializable {
     @Column(name = "status", nullable = false)
     private ContentStatus status = ContentStatus.DRAFT;
 
-    @Column(name = "permalink")
+    @Column(name = "permalink", unique = true)
     private String permalink;
 
     @ManyToOne

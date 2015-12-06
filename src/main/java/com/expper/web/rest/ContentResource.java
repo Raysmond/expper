@@ -3,6 +3,7 @@ package com.expper.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.expper.domain.Content;
 import com.expper.repository.ContentRepository;
+import com.expper.service.ContentService;
 import com.expper.service.UserService;
 import com.expper.web.rest.util.HeaderUtil;
 import com.expper.web.rest.util.PaginationUtil;
@@ -41,6 +42,9 @@ public class ContentResource {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ContentService contentService;
+
     /**
      * POST  /contents -> Create a new content.
      */
@@ -72,7 +76,7 @@ public class ContentResource {
         if (content.getId() == null) {
             return createContent(content);
         }
-        Content result = contentRepository.save(content);
+        Content result = contentService.updateContent(content);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("content", content.getId().toString()))
             .body(result);

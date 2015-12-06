@@ -3,18 +3,22 @@
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorator="index">
 <head>
-    <title th:inline="text">关于 - Expper</title>
+    <title th:inline="text" th:text="${content.title} + ' - Expper'"></title>
 </head>
 <body>
 <div layout:fragment="content">
-    <div class="block post-block post post-page  page">
+    <div class="block post-block post post-page page">
         <div class="panel panel-default post">
             <div class="panel-heading">
-                <h1 class="title"><i class="fa fa-heart-o"></i> 关于Expper</h1>
+                <h1 class="title" th:text="${content.title}"></h1>
             </div>
             <div class="panel-body">
                 <div class="post-body">
                     <div class="content-body" th:utext="${content.content}"></div>
+                </div>
+
+                <div class="comments disqus-comments">
+                    <div layout:include="content/disqus :: disqus"></div>
                 </div>
             </div>
         </div>

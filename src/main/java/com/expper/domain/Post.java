@@ -13,9 +13,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
-import org.springframework.data.elasticsearch.annotations.Parent;
 
 import java.time.ZonedDateTime;
 
