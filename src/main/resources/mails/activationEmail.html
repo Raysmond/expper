@@ -12,7 +12,7 @@
             Your JHipster account has been created, please click on the URL below to activate it:
         </p>
         <p>
-            <a th:href="@{|${baseUrl}/me/#/activate?key=${user.activationKey}|}">立即激活</a>
+            <a th:href="@{|${baseUrl}/user/activate?key=${user.activationKey}|}">立即激活</a>
         </p>
         <p>
             <span th:text="#{email.activation.text2}">Regards, </span>
