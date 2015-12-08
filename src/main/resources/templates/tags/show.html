@@ -10,9 +10,9 @@
         <div class="panel panel-default tag-page" th:classappend="'tag-item-'+${tag.id}" ng-controller="UserTagController">
             <div class="panel-heading">
                 <div class="fright orders">
-                    <a th:href="${#httpServletRequest.requestURI}">热门</a>
+                    <a th:href="${#httpServletRequest.requestURI}" th:class="${sort}=='hot' ? 'active' : ''">热门</a>
                     <span class="slash">•</span>
-                    <a th:href="${#httpServletRequest.requestURI} + '?sort=new'">最新</a>
+                    <a th:href="${#httpServletRequest.requestURI} + '?sort=new'" th:class="${sort}=='new' ? 'active' : ''">最新</a>
                 </div>
                 <span class="page-title">
                     <i class="fa fa-tag"></i>

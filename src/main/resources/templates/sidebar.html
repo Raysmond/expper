@@ -102,6 +102,10 @@
                 <span class="count" th:text="${@countingService.getPublicPostsCount()}"></span>
             </div>
             <div>
+                <span class="label">收藏文章</span>
+                <span class="count" th:text="${@countingService.getPostsCount()}"></span>
+            </div>
+            <div>
                 <span class="label">标签</span>
                 <span class="count" th:text="${@countingService.getTagsCount()}"></span>
             </div>

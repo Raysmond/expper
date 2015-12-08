@@ -27,13 +27,48 @@
                         <span class="hidden-sm">关于</span>
                     </a>
                 </li>
+                <li>
+                    <a href="/p/links">
+                        <span class="hidden-sm">友情链接</span>
+                    </a>
+                </li>
             </ul>
+            <form class="navbar-form navbar-left query-posts-form" role="search" action="/posts/search" method="get">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="q"  placeholder="搜索文章" />
+                </div>
+            </form>
             <ul class="nav navbar-nav navbar-right">
                 <li ui-sref-active="active">
                     <a ui-sref="post" data-toggle="collapse" ng-switch-when="true" data-target=".navbar-collapse.in">
                         <i class="fa fa-th-list"></i>
                         <span class="hidden-sm">我的文章</span>
                     </a>
+                </li>
+                <li ng-class="{active: $state.includes('account')}" ng-switch-when="true" has-authority="ROLE_USER" class="dropdown pointer">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="">
+                        <span>
+                            <i class="fa fa-user"></i>
+                            <span class="hidden-sm">
+                                我
+                            </span>
+                            <b class="caret"></b>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li ui-sref-active="active" ><a ui-sref="settings" data-toggle="collapse" data-target=".navbar-collapse.in">
+                            <i class="fa fa-gear"></i>
+                            &#xA0;<span>设置</span></a></li>
+                        <li ui-sref-active="active" ><a ui-sref="password" data-toggle="collapse" data-target=".navbar-collapse.in">
+                            <i class="fa fa-lock"></i>
+                            &#xA0;<span>密码</span></a></li>
+                        <li ui-sref-active="active"><a ui-sref="sessions" data-toggle="collapse" data-target=".navbar-collapse.in">
+                            <i class="fa fa-cloud"></i>
+                            &#xA0;<span>Session</span></a></li>
+                        <li ui-sref-active="active"><a href="" ng-click="logout()" data-toggle="collapse" data-target=".navbar-collapse.in">
+                            <i class="fa fa-sign-out"></i>
+                            &#xA0;<span>登出</span></a></li>
+                    </ul>
                 </li>
                 <li ui-sref-active="active" ng-switch-when="true" has-authority="ROLE_ADMIN" class="dropdown pointer">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="">
@@ -62,31 +97,7 @@
                 <li ui-sref-active="active" ng-switch-when="false"><a ui-sref="login" data-target=".navbar-collapse.in"><span>登录</span></a></li>
                 <li ui-sref-active="active" ng-switch-when="false"><a ui-sref="register"  data-target=".navbar-collapse.in"><span>注册</span></a></li>
 
-                <li ng-class="{active: $state.includes('account')}" ng-switch-when="true" has-authority="ROLE_USER" class="dropdown pointer">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="">
-                        <span>
-                            <i class="fa fa-user"></i>
-                            <span class="hidden-sm">
-                                我
-                            </span>
-                            <b class="caret"></b>
-                        </span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li ui-sref-active="active" ><a ui-sref="settings" data-toggle="collapse" data-target=".navbar-collapse.in">
-                          <i class="fa fa-gear"></i>
-                            &#xA0;<span>设置</span></a></li>
-                        <li ui-sref-active="active" ><a ui-sref="password" data-toggle="collapse" data-target=".navbar-collapse.in">
-                          <i class="fa fa-lock"></i>
-                            &#xA0;<span>密码</span></a></li>
-                        <li ui-sref-active="active"><a ui-sref="sessions" data-toggle="collapse" data-target=".navbar-collapse.in">
-                          <i class="fa fa-cloud"></i>
-                            &#xA0;<span>Session</span></a></li>
-                        <li ui-sref-active="active"><a href="" ng-click="logout()" data-toggle="collapse" data-target=".navbar-collapse.in">
-                          <i class="fa fa-sign-out"></i>
-                            &#xA0;<span>登出</span></a></li>
-                    </ul>
-                </li>
+
                 <li ng-class="{active: $state.includes('admin')}"  ng-switch-when="true" has-authority="ROLE_ADMIN" class="dropdown pointer">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="">
                         <span>

@@ -1265,3 +1265,12 @@ div.token-input-dropdown-bootstrap ul li.token-input-selected-dropdown-item-boot
   background-color: $dropdown-link-hover-bg;
   cursor: pointer;
 }
+
+.chrome-plugin-link{
+    text-align: right;
+    padding-top: 10px;
+    a{
+        /*color : #888;*/
+        font-size: 0.9em;
+    }
+}

@@ -7,7 +7,7 @@ angular.module('expperApp')
     $scope.filterTag = {};
     $scope.page = 0;
     $scope.searchQuery = '';
-    var PAGE_SIZE = 20;
+    var PAGE_SIZE = 40;
 
     $scope.loadAll = function() {
       Post.query({

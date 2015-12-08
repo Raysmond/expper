@@ -164,6 +164,8 @@ public class PostService {
             newPostsService.addTaggedPost(post, post.getTags());
             countingService.incPublicPostsCount();
         }
+
+        countingService.incPostsCount();
     }
 
 
@@ -241,6 +243,7 @@ public class PostService {
         }
 
         PostSearchService.deleteIndex(post.getId());
+        countingService.decPostsCount();
     }
 
     @Timed

@@ -81,6 +81,16 @@ public class CountingService {
         return val;
     }
 
+    public Integer getPostsCount() {
+        Integer val = counting.get(CACHE_COUNTING, "all_posts");
+        if (val == null) {
+            val = (int) postRepository.count();
+            counting.put(CACHE_COUNTING, "all_posts", val);
+        }
+
+        return val;
+    }
+
     public Integer getTagsCount() {
         Integer val = counting.get(CACHE_COUNTING, "tags");
         if (val == null) {
@@ -91,12 +101,17 @@ public class CountingService {
         return val;
     }
 
+
     public void incUsersCount() {
         counting.increment(CACHE_COUNTING, "users", 1);
     }
 
     public void incPublicPostsCount() {
         counting.increment(CACHE_COUNTING, "public_posts", 1);
+    }
+
+    public void incPostsCount() {
+        counting.increment(CACHE_COUNTING, "all_posts", 1);
     }
 
     public void incTagsCount() {
@@ -109,6 +124,10 @@ public class CountingService {
 
     public void decPublicPostsCount() {
         counting.increment(CACHE_COUNTING, "public_posts", -1);
+    }
+
+    public void decPostsCount() {
+        counting.increment(CACHE_COUNTING, "all_posts", -1);
     }
 
     public void decTagsCount() {
