@@ -302,11 +302,6 @@ public class PostService {
         return result;
     }
 
-    // New posts in front
-    public void sortPostsByDate(List<Post> posts) {
-        Collections.sort(posts, (o1, o2) -> o2.getId().compareTo(o1.getId()));
-    }
-
     @Transactional
     public void updatePostCounting(long postId, int votesUp, int votesDown, int hits, int replies) {
         postRepository.updateCounting(postId, votesUp, votesDown, hits, replies);

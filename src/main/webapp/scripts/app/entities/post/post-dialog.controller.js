@@ -80,8 +80,12 @@ angular.module('expperApp').controller('PostDialogController', ['$scope',
 
     $scope.save = function() {
       $scope.post.tags = $scope.getTagInput();
-      $scope.post.content = $scope.editor.getValue();
-      $scope.post.summary = $scope.summaryEditor.getValue();
+
+      if($scope.post.id != undefined){
+          $scope.post.content = $scope.editor.getValue();
+          $scope.post.summary = $scope.summaryEditor.getValue();
+      }
+
       if ($scope.post.id != null) {
         Post.update($scope.post, onSaveFinished);
       } else {
