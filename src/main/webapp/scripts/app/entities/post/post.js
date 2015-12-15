@@ -5,7 +5,7 @@ angular.module('expperApp')
     $stateProvider
       .state('post', {
         parent: 'entity',
-        url: '/',
+        url: '/posts',
         data: {
           authorities: ['ROLE_USER'],
           pageTitle: '我的文章'

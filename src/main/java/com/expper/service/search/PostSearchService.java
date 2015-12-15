@@ -23,13 +23,12 @@ public class PostSearchService {
     // Deprecated
     @Async
     public void indexAll() {
-        postRepository.findAll().forEach(post ->
-            postSearchRepository.save(postRepository.findPostWithTags(post.getId())));
+        postRepository.findAll().forEach(postSearchRepository::save);
     }
 
     @Async
     public void index(Post post) {
-        postSearchRepository.save(post);
+        postSearchRepository.save(postRepository.findPostWithTags(post.getId()));
     }
 
     @Async

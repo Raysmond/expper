@@ -49,9 +49,6 @@ public class RabbitConsumer {
     private MessageService messageService;
 
     @Autowired
-    private ReplyRepository replyRepository;
-
-    @Autowired
     private UserRepository userRepository;
 
     public void handleMessage(PostDTO postDTO) {

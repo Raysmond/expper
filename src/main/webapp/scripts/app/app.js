@@ -57,7 +57,7 @@ angular.module('expperApp', ['LocalStorageModule',
         //Cache everything except rest api requests
         httpRequestInterceptorCacheBusterProvider.setMatchlist([/.*api.*/, /.*protected.*/], true);
 
-        $urlRouterProvider.otherwise('/');
+        $urlRouterProvider.otherwise('/posts');
         $stateProvider.state('site', {
             'abstract': true,
             views: {
