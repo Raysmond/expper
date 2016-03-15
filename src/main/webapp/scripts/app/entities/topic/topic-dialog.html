@@ -45,12 +45,7 @@
             <!--<label for="field_tags">tags</label>-->
             <!--<select class="form-control" id="field_tags" multiple name="tags" ng-model="topic.tags" ng-options="tag as tag.friendly_name for tag in tags track by tag.id"></select>-->
         <!--</div>-->
-        <div isteven-multi-select
-             input-model="tags"
-             output-model="selectedTags"
-             button-label="friendly_name"
-             item-label="friendly_name"
-             tick-property="ticked"></div>
+        <div isteven-multi-select input-model="tags" output-model="selectedTags" button-label="friendly_name" item-label="friendly_name" tick-property="ticked"></div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">

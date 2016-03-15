@@ -4,6 +4,6 @@ angular.module('expperApp')
 
 .constant('ENV', 'dev')
 
-.constant('VERSION', '1.4.9-SNAPSHOT')
+.constant('VERSION', '1.5.2-SNAPSHOT')
 
 ;

@@ -10,7 +10,6 @@ angular.module('expperApp').controller('TopicDialogController',
         $scope.load = function(id) {
             Topic.get({id : id}, function(result) {
                 $scope.topic = result;
-
                 Tag.query({page:0, size:100000}, function(res){
                     $scope.tags = res;
                     $scope.tags.forEach(function(tag){

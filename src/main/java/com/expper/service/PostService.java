@@ -195,6 +195,8 @@ public class PostService {
 
         updateTags(post, oldPost);
 
+        post.setContent(Jsoup.clean(post.getContent(), Whitelist.relaxed()));
+
         Post result = postRepository.save(post);
         postRepository.flush();
         result.getTags().size();

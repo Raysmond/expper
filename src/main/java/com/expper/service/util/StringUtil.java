@@ -11,7 +11,7 @@ import java.net.URISyntaxException;
 public class StringUtil {
 
     public static String toMachineString(String str) {
-        String token = str.toLowerCase().replace("\n", " ").replaceAll("[\\s]", " ");
+        String token = str.toLowerCase().replace("\n", " ").replaceAll("[\\s]", " ").replaceAll("/", " ");
         return StringUtils.arrayToDelimitedString(StringUtils.tokenizeToStringArray(token, " "), "-");
     }
 
