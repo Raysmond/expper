@@ -42,15 +42,22 @@ public class ExpperController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "", method = GET)
+    @RequestMapping(value = "leading", method = GET)
     @Timed
-    public String index() {
-        if (SecurityUtils.isAuthenticated()) {
-            return "redirect:/me";
-        }
-
+    public String leading() {
         return "leading_home";
     }
+
+//    @RequestMapping(value = "", method = GET)
+//    @Timed
+//    public String index() {
+//        if (SecurityUtils.isAuthenticated()) {
+//            return "redirect:/me";
+//        }
+//
+//        //return "leading_home";
+//        return "redirect:/posts";
+//    }
 
     @RequestMapping(value = "me", method = GET)
     @Timed
@@ -70,7 +77,6 @@ public class ExpperController {
             content = contentRepository.save(content);
         }
 
-        System.out.println(message);
         model.addAttribute("message", message);
         model.addAttribute("content", content);
         return "about";

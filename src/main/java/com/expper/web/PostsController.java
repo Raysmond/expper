@@ -34,7 +34,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
  * @author Raysmond<i@raysmond.com>
  */
 @Controller
-@RequestMapping("/posts")
 public class PostsController {
     @Autowired
     private PostService postService;
@@ -65,7 +64,18 @@ public class PostsController {
 
     @RequestMapping(value = "", method = GET)
     @Timed
+    public String index(@RequestParam(defaultValue = "1") int page, Model model) {
+        if (SecurityUtils.isAuthenticated()) {
+            return "redirect:/me";
+        }
+
+        return hotPosts(page, model);
+    }
+
+    @RequestMapping(value = "posts", method = GET)
+    @Timed
     public String hotPosts(@RequestParam(defaultValue = "1") int page, Model model) {
+
         page = page < 1 ? 1 : page - 1;
         long size = hotPostService.size();
         long pages = size / PAGE_SIZE + (size % PAGE_SIZE != 0 ? 1 : 0);
@@ -81,7 +91,7 @@ public class PostsController {
         return "posts/hot";
     }
 
-    @RequestMapping(value = "new", method = RequestMethod.GET)
+    @RequestMapping(value = "posts/new", method = RequestMethod.GET)
     @Timed
     public String newPosts(@RequestParam(defaultValue = "1") int page, Model model) {
         page = page < 1 ? 1 : page - 1;
@@ -100,7 +110,7 @@ public class PostsController {
         return "posts/new";
     }
 
-    @RequestMapping(value = "{id:\\d+}", method = RequestMethod.GET)
+    @RequestMapping(value = "posts/{id:\\d+}", method = RequestMethod.GET)
     @Timed
     public String showPost(@PathVariable Long id, Model model) {
         Post post = postService.getPost(id);
@@ -122,7 +132,7 @@ public class PostsController {
         return "posts/show";
     }
 
-    @RequestMapping(value = "search", method = RequestMethod.GET)
+    @RequestMapping(value = "posts/search", method = RequestMethod.GET)
     @Timed
     public String search(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "", name = "q") String query, Model model) {
         page = page < 1 ? 1 : page - 1;
