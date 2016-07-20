@@ -69,6 +69,19 @@ public class UserDTO {
         this.picture = picture;
     }
 
+    public UserDTO(String login, String password, String firstName, String lastName,
+                   String email, boolean activated, String langKey, Set<String> authorities) {
+
+        this.login = login;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.activated = activated;
+        this.langKey = langKey;
+        this.authorities = authorities;
+    }
+
     public String getPicture() {
         return picture;
     }

@@ -70,7 +70,7 @@ public class PostService {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    public static final String SERVER_URL = "http://www.expper.com:8000/get?url=%s";
+    public static final String SERVER_URL = "http://10.131.245.176:8000/get?url=%s";
 
     public static final String CACHE_POST = "entity.post";
 

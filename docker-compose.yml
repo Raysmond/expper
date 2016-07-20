@@ -1,11 +1,37 @@
-jhipster-dev-postgresql:
-  container_name: expper-dev-postgresql
+expper-prod-postgresql:
+  container_name: expper-prod-postgresql
   image: postgres:9.4.5
-  # volumes:
-  # - ~/volumes/jhipster/expper/dev-postgresql/:/var/lib/postgresql/
+  volumes:
+    - /opt/expper/postgresql/:/var/lib/postgresql/
+    - /opt/expper/docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d/
   environment:
-  - POSTGRES_USER=expper
-  - POSTGRES_PASSWORD=
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=Bdh2Vitpo5etmtSqw9
+    - POSTGRES_DB=expper_production
   ports:
-  - "5432:5432"
+    - "5432:5432"
 
+expper-redis:
+    container_name: expper-redis
+    image: redis
+#    ports:
+#      - "6379:6379"
+
+elasticsearch:
+    container_name: expper-elasticsearch
+    image: elasticsearch:1.7.2
+    command: elasticsearch -Des.node.name=expper_es
+    ports:
+        - "9200:9200"
+        - "9300:9300"
+web:
+    image: raysmond/expper:1.6.6
+    command: java -jar app.jar --spring.profiles.active=prod --spring.config.location=/expper/config/application-prod.yml
+    volumes:
+        - /root/expper/config/:/expper/config/
+    ports:
+      - "9001:9000"
+    links:
+      - expper-prod-postgresql:expper-prod-postgresql
+      - expper-redis:expper-redis
+      - elasticsearch:elasticsearch

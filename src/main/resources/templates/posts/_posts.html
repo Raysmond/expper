@@ -39,7 +39,6 @@
                   th:href="'/tags/'+${tag.name}">
                 </a>
               </span>
-              <span class="bullet" th:classappend="${post.tags.size()} == 0 ? 'invisible' : ''">•</span>
               <span class="author">
                 <a th:href="'/u/'+${post.user.login}" th:text="${post.user.login}"></a>
                 <span>分享于</span>
